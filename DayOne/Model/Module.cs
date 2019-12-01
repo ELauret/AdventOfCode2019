@@ -35,9 +35,10 @@ namespace DayOne.Model
         {
             var requiredFuel = 0;
 
-            if (RequiredFuelSimpleModel(mass) > 0)
-            {
-                mass = RequiredFuelSimpleModel(mass);
+            mass = RequiredFuelSimpleModel(mass);
+
+            if (mass > 0)
+            {                
                 requiredFuel += mass + RequiredFuelComplexModel(mass);
             }
 
