@@ -12,11 +12,7 @@ namespace DayOne
 
             try
             {
-                //if (File.Exists(path))
-                //{
-                //    //File.CreateText(path);
-                //    throw new FileNotFoundException();
-                //}
+                if (!File.Exists(path)) throw new FileNotFoundException();
 
                 var lines = File.ReadAllLines(path);
 
