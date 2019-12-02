@@ -16,14 +16,14 @@ namespace DayTwo.Tests
         [DataRow(new int[] { 1, 1, 1, 4, 99, 5, 6, 0, 99 }, new int[] { 30, 1, 1, 4, 2, 5, 6, 0, 99 })]
         public void TestMethod1(int[] inputCode, int[] expectedOutputCode)
         {
-            var program = new IntcodeProgram(inputCode);
+            var program = new IntcodeComputer(inputCode);
 
-            program.Run();
+            program.RunProgram();
 
             Console.WriteLine("[{0}]", string.Join(", ", expectedOutputCode));
-            Console.WriteLine("[{0}]", string.Join(", ", program.Code));
+            Console.WriteLine("[{0}]", string.Join(", ", program.Memory));
 
-            CollectionAssert.AreEquivalent(expectedOutputCode, program.Code);
+            CollectionAssert.AreEquivalent(expectedOutputCode, program.Memory);
         }
     }
 }
