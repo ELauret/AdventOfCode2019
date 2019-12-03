@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DayOne.Model
+﻿namespace DayOne.Model
 {
     public class Module
     {
@@ -10,7 +6,7 @@ namespace DayOne.Model
         public CalculationType CalculationType { get; }
         public int RequiredFuel
         {
-            get{ return CalculateRequiredFuelForMass(Mass, CalculationType); }
+            get { return CalculateRequiredFuelForMass(Mass, CalculationType); }
         }
 
         public Module(int mass, CalculationType calculationType)
@@ -38,7 +34,7 @@ namespace DayOne.Model
             mass = RequiredFuelSimpleModel(mass);
 
             if (mass > 0)
-            {                
+            {
                 requiredFuel += mass + RequiredFuelComplexModel(mass);
             }
 

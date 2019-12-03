@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DayOne.Model
+﻿namespace DayOne.Model
 {
     public enum CalculationType
     {

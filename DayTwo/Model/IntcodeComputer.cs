@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DayTwo.Model
 {
     public class IntcodeComputer
     {
-        public List<int> Memory{ get; set; }
+        public List<int> Memory { get; set; }
 
         public IntcodeComputer(IEnumerable<int> program)
         {

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using DayTwo.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using DayTwo.Model;
 
 namespace DayTwo
 {

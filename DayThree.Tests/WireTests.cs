@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DayThree.Model;
+﻿using DayThree.Model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DayThree.Tests
 {

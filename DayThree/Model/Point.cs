@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace DayThree.Model
 {
@@ -23,7 +20,7 @@ namespace DayThree.Model
             Y = y;
         }
 
-        public Point(Point other) : this(other.X, other.Y) {}
+        public Point(Point other) : this(other.X, other.Y) { }
 
         public int ManhattanDistanceTo(Point point)
         {

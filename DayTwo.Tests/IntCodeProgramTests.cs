@@ -1,7 +1,5 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
 using DayTwo.Model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace DayTwo.Tests
