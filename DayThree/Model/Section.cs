@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace DayThree.Model
@@ -9,20 +7,6 @@ namespace DayThree.Model
     {
         public Direction Direction { get; set; }
         public int Length { get; set; }
-
-        public Section(string direction, int lenght)
-        {
-            try
-            {
-                Direction = GetDirection(direction);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-
-            Length = lenght;
-        }
 
         public Section(string sectionString)
         {
@@ -42,6 +26,7 @@ namespace DayThree.Model
             {
                 throw new ArgumentException(ex.Message);
             }
+
             Length = int.Parse(match.Groups["Length"].Value);
         }
 

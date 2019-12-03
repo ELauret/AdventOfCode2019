@@ -10,8 +10,14 @@ namespace DayThree.Model
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public int StepsToReachPoint { get; set; }
 
-        public Point(int x, int y)
+        public Point()
+        {
+            StepsToReachPoint = 0;
+        }
+
+        public Point(int x, int y) : this()
         {
             X = x;
             Y = y;

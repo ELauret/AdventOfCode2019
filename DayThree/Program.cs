@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace DayThree
 {
@@ -28,6 +27,11 @@ namespace DayThree
                 intersectionPoints.Remove(origin);
 
                 Console.WriteLine(intersectionPoints.Min(p => p.ManhattanDistanceTo(origin)));
+
+                var fewestSteps = intersectionPoints.Select(p => p.StepsToReachPoint = firstWire.Path.Find(q => q == p).StepsToReachPoint
+                        + secondWire.Path.Find(q => q == p).StepsToReachPoint).Min();
+
+                Console.WriteLine(fewestSteps);
             }
             catch (Exception ex)
             {

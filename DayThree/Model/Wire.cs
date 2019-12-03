@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -56,7 +55,11 @@ namespace DayThree.Model
                         break;
                 }
 
-                Path.Add(p);
+                if (p.StepsToReachPoint == 0)
+                {
+                    p.StepsToReachPoint = sectionOrigin.StepsToReachPoint + i + 1;
+                    Path.Add(p);
+                }
             }
         }
 
