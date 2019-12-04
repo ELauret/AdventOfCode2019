@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using DayFour.Model;
 using MoreLinq;
 
 namespace DayFour
@@ -15,28 +16,10 @@ namespace DayFour
             Console.WriteLine($"What is the highest boundary of the range?");
             var maximum = int.Parse(Console.ReadLine());
 
-
-            // Count of numbers within range with increasing digits
-            var count = Enumerable.Range(minimum, maximum - minimum + 1)
-                .Where(n => n.ToString().Window(2).All(w => w[0] <= w[1])).Count();
-            Console.WriteLine(count);
-
-            // Count of numbers within range with strictly increasing digits
-            count = Enumerable.Range(minimum, maximum - minimum + 1)
-                .Where(n => n.ToString().Window(2).All(w => w[0] < w[1])).Count();
-            Console.WriteLine(count);
-
-            // Count of numbers within range with increasing digits and at least a pair of adjacent and identical digits
-            count = Enumerable.Range(minimum, maximum - minimum + 1)
-                .Where(n => n.ToString().Window(2).All(w => w[0] <= w[1]))
-                .Where(n => n.ToString().Window(2).Any(w => w[0] == w[1])).Count();
-            Console.WriteLine(count);
-
-            // Count of numbers within range with increasing digits and at least an exact pair of adjacent and identical digits
-            count = Enumerable.Range(minimum, maximum - minimum + 1)
-                .Where(n => n.ToString().Window(2).All(w => w[0] <= w[1]))
-                .Where(n => n.ToString().GroupAdjacent(d => d).Any(g => g.Count() == 2)).Count();
-            Console.WriteLine(count);
+            Console.WriteLine(NumbersCounter.WithIncreasingDigits(minimum, maximum));
+            Console.WriteLine(NumbersCounter.WithStrictlyIncreasingDigits(minimum, maximum));
+            Console.WriteLine(NumbersCounter.WithIncreasingDigitsAdjacentIdenticalPair(minimum, maximum));
+            Console.WriteLine(NumbersCounter.WithIncreasingDigitsExactAdjacentIdenticalPair(minimum, maximum));
         }
     }
 }
