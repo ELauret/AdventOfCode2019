@@ -1,8 +1,8 @@
-using DayTwo.Model;
+using DayFive.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace DayTwo.Tests
+namespace DayFive.Tests
 {
     [TestClass]
     public class IntCodeProgramTests
@@ -16,7 +16,7 @@ namespace DayTwo.Tests
         {
             var program = new IntcodeComputer(inputCode);
 
-            program.RunProgram();
+            program.RunProgram(0);
 
             Console.WriteLine("[{0}]", string.Join(", ", expectedOutputCode));
             Console.WriteLine("[{0}]", string.Join(", ", program.Memory));
