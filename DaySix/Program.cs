@@ -20,6 +20,13 @@ namespace DaySix
 
 				var map = new Map(lines, "COM");
 				Console.WriteLine(map.TotalNumberOfDirectAndIndirectOrbits());
+
+                var pathToYou = new OrbitPath(map).FromMapCenterTo("YOU");
+                var pathToSan = new OrbitPath(map).FromMapCenterTo("SAN");
+
+                var commonNodes = pathToYou.Nodes.Intersect(pathToSan.Nodes);
+
+                Console.WriteLine(pathToYou.Nodes.Count() + pathToSan.Nodes.Count() - 2 * commonNodes.Count());
 			}
 			catch (Exception ex)
 			{
