@@ -13,7 +13,7 @@ namespace DayOne.Tests
         [DataRow(100756, 33583)]
         public void RequiredFuelForModuleSimple(int mass, int expectedFuel)
         {
-            var module = new Module(mass, CalculationType.Simple);
+            var module = new SpacecraftModule(mass, CalculationType.Simple);
             Assert.AreEqual(expectedFuel, module.RequiredFuel);
         }
 
@@ -24,7 +24,7 @@ namespace DayOne.Tests
         [DataRow(100756, 50346)]
         public void RequiredFuelForModuleComplex(int mass, int expectedFuel)
         {
-            var module = new Module(mass, CalculationType.Complex);
+            var module = new SpacecraftModule(mass, CalculationType.Complex);
             Assert.AreEqual(expectedFuel, module.RequiredFuel);
         }
     }

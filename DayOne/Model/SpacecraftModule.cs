@@ -1,6 +1,6 @@
 ﻿namespace DayOne.Model
 {
-    public class Module
+    public class SpacecraftModule
     {
         public int Mass { get; set; }
         public CalculationType CalculationType { get; }
@@ -9,7 +9,7 @@
             get { return CalculateRequiredFuelForMass(Mass, CalculationType); }
         }
 
-        public Module(int mass, CalculationType calculationType)
+        public SpacecraftModule(int mass, CalculationType calculationType)
         {
             Mass = mass;
             CalculationType = calculationType;

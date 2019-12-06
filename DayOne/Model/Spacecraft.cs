@@ -5,12 +5,12 @@ namespace DayOne.Model
 {
     public class Spacecraft
     {
-        public List<Module> Modules { get; set; }
+        public List<SpacecraftModule> Modules { get; set; }
         public int RequiredFuel { get { return Modules.Sum(m => m.RequiredFuel); } }
 
         public Spacecraft()
         {
-            Modules = new List<Module>();
+            Modules = new List<SpacecraftModule>();
         }
     }
 }

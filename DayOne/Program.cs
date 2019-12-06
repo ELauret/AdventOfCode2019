@@ -22,7 +22,7 @@ namespace DayOne
 
                 foreach (var line in lines)
                 {
-                    spacecraft.Modules.Add(new Module(int.Parse(line), CalculationType.Complex));
+                    spacecraft.Modules.Add(new SpacecraftModule(int.Parse(line), CalculationType.Complex));
                 }
 
                 Console.WriteLine(spacecraft.RequiredFuel);
