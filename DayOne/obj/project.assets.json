@@ -477,25 +477,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Eric\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\ericl\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eric\\GitHub\\AdventOfCode2019\\DayOne\\DayOne.csproj",
+      "projectUniqueName": "C:\\Users\\ericl\\Source\\Repos\\AdventOfCode2019\\DayOne\\DayOne.csproj",
       "projectName": "DayOne",
-      "projectPath": "C:\\Users\\Eric\\GitHub\\AdventOfCode2019\\DayOne\\DayOne.csproj",
-      "packagesPath": "C:\\Users\\Eric\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eric\\GitHub\\AdventOfCode2019\\DayOne\\obj\\",
+      "projectPath": "C:\\Users\\ericl\\Source\\Repos\\AdventOfCode2019\\DayOne\\DayOne.csproj",
+      "packagesPath": "C:\\Users\\ericl\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ericl\\Source\\Repos\\AdventOfCode2019\\DayOne\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Eric\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ericl\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -504,7 +502,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://www.nuget.org/api/v2/": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.0": {
@@ -543,12 +541,30 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[3.0.1, 3.0.1]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[3.0.1, 3.0.1]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[3.0.0, 3.0.0]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[3.0.0, 3.0.0]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

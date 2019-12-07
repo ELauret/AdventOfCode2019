@@ -1,4 +1,5 @@
-﻿using DayFive.Model;
+﻿using System;
+using DayFive.Model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,15 +7,19 @@ namespace DayFive.Model
 {
     public class IntcodeComputer
     {
+        public IEnumerable<int> Program { get; }
         public List<int> Memory { get; set; }
 
         public IntcodeComputer(IEnumerable<int> program)
         {
-            Memory = program.ToList();
+            Program = program;
+            Memory = new List<int>(program);
         }
 
-        public int RunProgram(int input)
+        public int RunProgram(IEnumerable<int> input)
         {
+            if (!input.Any()) throw new ArgumentException($"Input musy have at least one element!");
+
             var instructionPointer = 0;
             var instructionCode = new InstructionCode(Memory[instructionPointer]);
             int output = int.MinValue;
@@ -30,7 +35,7 @@ namespace DayFive.Model
                         OpcodeTwo(ref instructionPointer, instructionCode);
                         break;
                     case 3:
-                        OpcodeThree(ref instructionPointer, input);
+                        OpcodeThree(ref instructionPointer, ref input);
                         break;
                     case 4:
                         output = OpcodeFour(ref instructionPointer, instructionCode);
@@ -81,9 +86,12 @@ namespace DayFive.Model
             pointer += 4;
         }
 
-        private void OpcodeThree(ref int pointer, int input)
+        private void OpcodeThree(ref int pointer, ref IEnumerable<int> input)
         {
-            Memory[Memory[pointer + 1]] = input;
+            Memory[Memory[pointer + 1]] = input.ElementAt(0);
+
+            var count = input.Count();
+            if (count > 1) input = input.TakeLast(count - 1);
 
             pointer += 2;
         }
@@ -142,7 +150,12 @@ namespace DayFive.Model
 
         public void Reset()
         {
-            Memory = new List<int>();
+            Memory = new List<int>(Program);
+        }
+
+        public override string ToString()
+        {
+            return string.Join("\t", Memory);
         }
     }
 }

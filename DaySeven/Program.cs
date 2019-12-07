@@ -1,9 +1,9 @@
-﻿using DayFive.Model;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
+using DaySeven.Model;
 
-namespace DayFive
+namespace DaySeven
 {
     class Program
     {
@@ -19,12 +19,10 @@ namespace DayFive
                 if (lines.Length == 0) throw new Exception($"File is empty.");
                 var inputCode = lines[0].Split(",").Select(int.Parse);
 
-                var computer = new IntcodeComputer(inputCode);
+                var amplifyingStack = new AmplifyingStack(5, inputCode);
+                var optimalConfig = amplifyingStack.Optimize(0);
 
-                Console.WriteLine($"What is the input?");
-                var input = new int[] { int.Parse(Console.ReadLine()) };
-
-                Console.WriteLine(computer.RunProgram(input));
+                Console.WriteLine(optimalConfig.output);
             }
             catch (Exception ex)
             {
