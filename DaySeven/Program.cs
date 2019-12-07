@@ -20,7 +20,12 @@ namespace DaySeven
                 var inputCode = lines[0].Split(",").Select(int.Parse);
 
                 var amplifyingStack = new AmplifyingStack(5, inputCode);
-                var optimalConfig = amplifyingStack.Optimize(0);
+                var optimalConfig = amplifyingStack.Optimize(0, false);
+
+                Console.WriteLine(optimalConfig.output);
+
+                amplifyingStack.Reset();
+                optimalConfig = amplifyingStack.Optimize(0, true);
 
                 Console.WriteLine(optimalConfig.output);
             }

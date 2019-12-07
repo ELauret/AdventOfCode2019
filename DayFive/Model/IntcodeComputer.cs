@@ -10,56 +10,63 @@ namespace DayFive.Model
         public IEnumerable<int> Program { get; }
         public List<int> Memory { get; set; }
 
+        public Queue<int> Input { get; set; }
+        public int InstructionPointer { get; set; }
+
         public IntcodeComputer(IEnumerable<int> program)
         {
             Program = program;
-            Memory = new List<int>(program);
+            Reset();
         }
 
-        public int RunProgram(IEnumerable<int> input)
+        public ProgramStatus RunProgram(IEnumerable<int> input, ref int output)
         {
-            if (!input.Any()) throw new ArgumentException($"Input musy have at least one element!");
+            if (!input.Any()) throw new ArgumentException($"Input must have at least one element!");
 
-            var instructionPointer = 0;
-            var instructionCode = new InstructionCode(Memory[instructionPointer]);
-            int output = int.MinValue;
+            var instructionCode = new InstructionCode(Memory[InstructionPointer]);
+
+            foreach (var entry in input)
+            {
+                Input.Enqueue(entry);
+            }
 
             while (instructionCode.Opcode != 99)
             {
                 switch (instructionCode.Opcode)
                 {
                     case 1:
-                        OpcodeOne(ref instructionPointer, instructionCode);
+                        OpcodeOne(instructionCode);
                         break;
                     case 2:
-                        OpcodeTwo(ref instructionPointer, instructionCode);
+                        OpcodeTwo(instructionCode);
                         break;
                     case 3:
-                        OpcodeThree(ref instructionPointer, ref input);
+                        if (!Input.Any()) return ProgramStatus.WaitingForInput;
+                        OpcodeThree();
                         break;
                     case 4:
-                        output = OpcodeFour(ref instructionPointer, instructionCode);
+                        output = OpcodeFour(instructionCode);
                         break;
                     case 5:
-                        OpcodeFive(ref instructionPointer, instructionCode);
+                        OpcodeFive(instructionCode);
                         break;
                     case 6:
-                        OpcodeSix(ref instructionPointer, instructionCode);
+                        OpcodeSix(instructionCode);
                         break;
                     case 7:
-                        OpcodeSeven(ref instructionPointer, instructionCode);
+                        OpcodeSeven(instructionCode);
                         break;
                     case 8:
-                        OpcodeHeigth(ref instructionPointer, instructionCode);
+                        OpcodeHeigth(instructionCode);
                         break;
                     default:
                         break;
                 }
 
-                instructionCode = new InstructionCode(Memory[instructionPointer]);
+                instructionCode = new InstructionCode(Memory[InstructionPointer]);
             }
 
-            return output;
+            return ProgramStatus.Terminated;
         }
 
         private int ProcessParameter(int pointer, ParameterMode mode)
@@ -68,79 +75,76 @@ namespace DayFive.Model
             else return Memory[pointer];
         }
 
-        private void OpcodeOne(ref int pointer, InstructionCode instruction)
+        private void OpcodeOne(InstructionCode instruction)
         {
-            Memory[Memory[pointer + 3]] =
-                ProcessParameter(pointer + 1, instruction.FirstParameter)
-                + ProcessParameter(pointer + 2, instruction.SecondParameter);
+            Memory[Memory[InstructionPointer + 3]] =
+                ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
+                + ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
 
-            pointer += 4;
+            InstructionPointer += 4;
         }
 
-        private void OpcodeTwo(ref int pointer, InstructionCode instruction)
+        private void OpcodeTwo(InstructionCode instruction)
         {
-            Memory[Memory[pointer + 3]] =
-                ProcessParameter(pointer + 1, instruction.FirstParameter)
-                * ProcessParameter(pointer + 2, instruction.SecondParameter);
+            Memory[Memory[InstructionPointer + 3]] =
+                ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
+                * ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
 
-            pointer += 4;
+            InstructionPointer += 4;
         }
 
-        private void OpcodeThree(ref int pointer, ref IEnumerable<int> input)
+        private void OpcodeThree()
         {
-            Memory[Memory[pointer + 1]] = input.ElementAt(0);
+            Memory[Memory[InstructionPointer + 1]] = Input.Dequeue();
 
-            var count = input.Count();
-            if (count > 1) input = input.TakeLast(count - 1);
-
-            pointer += 2;
+            InstructionPointer += 2;
         }
 
-        private int OpcodeFour(ref int pointer, InstructionCode instruction)
+        private int OpcodeFour(InstructionCode instruction)
         {
-            var output = ProcessParameter(pointer + 1, instruction.FirstParameter);
+            var output = ProcessParameter(InstructionPointer + 1, instruction.FirstParameter);
 
-            pointer += 2;
+            InstructionPointer += 2;
 
             return output;
         }
 
-        private void OpcodeFive(ref int pointer, InstructionCode instruction)
+        private void OpcodeFive(InstructionCode instruction)
         {
-            if (ProcessParameter(pointer + 1, instruction.FirstParameter) != 0)
-                pointer = ProcessParameter(pointer + 2, instruction.SecondParameter);
+            if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter) != 0)
+                InstructionPointer = ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
             else
-                pointer += 3;
+                InstructionPointer += 3;
         }
 
-        private void OpcodeSix(ref int pointer, InstructionCode instruction)
+        private void OpcodeSix(InstructionCode instruction)
         {
-            if (ProcessParameter(pointer + 1, instruction.FirstParameter) == 0)
-                pointer = ProcessParameter(pointer + 2, instruction.SecondParameter);
+            if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter) == 0)
+                InstructionPointer = ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
             else
-                pointer += 3;
+                InstructionPointer += 3;
         }
 
-        private void OpcodeSeven(ref int pointer, InstructionCode instruction)
+        private void OpcodeSeven(InstructionCode instruction)
         {
-            if (ProcessParameter(pointer + 1, instruction.FirstParameter)
-                < ProcessParameter(pointer + 2, instruction.SecondParameter))
-                Memory[Memory[pointer + 3]] = 1;
+            if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
+                < ProcessParameter(InstructionPointer + 2, instruction.SecondParameter))
+                Memory[Memory[InstructionPointer + 3]] = 1;
             else
-                Memory[Memory[pointer + 3]] = 0;
+                Memory[Memory[InstructionPointer + 3]] = 0;
 
-            pointer += 4;
+            InstructionPointer += 4;
         }
 
-        private void OpcodeHeigth(ref int pointer, InstructionCode instruction)
+        private void OpcodeHeigth(InstructionCode instruction)
         {
-            if (ProcessParameter(pointer + 1, instruction.FirstParameter)
-               == ProcessParameter(pointer + 2, instruction.SecondParameter))
-                Memory[Memory[pointer + 3]] = 1;
+            if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
+               == ProcessParameter(InstructionPointer + 2, instruction.SecondParameter))
+                Memory[Memory[InstructionPointer + 3]] = 1;
             else
-                Memory[Memory[pointer + 3]] = 0;
+                Memory[Memory[InstructionPointer + 3]] = 0;
 
-            pointer += 4;
+            InstructionPointer += 4;
         }
 
         public void FixInputMemory(int position, int value)
@@ -151,6 +155,8 @@ namespace DayFive.Model
         public void Reset()
         {
             Memory = new List<int>(Program);
+            Input = new Queue<int>();
+            InstructionPointer = 0;
         }
 
         public override string ToString()

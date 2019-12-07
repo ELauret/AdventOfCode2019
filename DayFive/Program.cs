@@ -24,7 +24,9 @@ namespace DayFive
                 Console.WriteLine($"What is the input?");
                 var input = new int[] { int.Parse(Console.ReadLine()) };
 
-                Console.WriteLine(computer.RunProgram(input));
+                int output = int.MinValue;
+                var status = computer.RunProgram(input, ref output);
+                Console.WriteLine(output);
             }
             catch (Exception ex)
             {

@@ -15,8 +15,8 @@ namespace DayFive.Tests
         public void TestRunProgramSuccessfuly(int[] inputCode, int[] expectedOutputCode)
         {
             var program = new IntcodeComputer(inputCode);
-
-            program.RunProgram(new int[] { 0 });
+            var output = int.MinValue;
+            program.RunProgram(new int[] { 0 }, ref output);
 
             Console.WriteLine("[{0}]", string.Join(", ", expectedOutputCode));
             Console.WriteLine("[{0}]", string.Join(", ", program.Memory));
@@ -46,14 +46,13 @@ namespace DayFive.Tests
         [DataRow(new int[] { 3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
                                 1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
                                 999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99 }, 13, 1001)]
-        [DataRow(new int[] { 3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0 }, 0, 0)]
-        [DataRow(new int[] { 3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0 }, 4, 44)]
         public void TestRunProgramOutputSuccessfuly(int[] inputCode, int input, int expectedOutput)
         {
             var program = new IntcodeComputer(inputCode);
+            var output = int.MinValue;
+            var status = program.RunProgram(new int[] { input }, ref output);
 
-            var output = program.RunProgram(new int[] { input });
-
+            Assert.AreEqual(ProgramStatus.Terminated, status);
             Assert.AreEqual(expectedOutput, output);
         }
     }
