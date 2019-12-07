@@ -22,9 +22,9 @@ namespace DaySeven.Model
             Engine.Reset();
         }
 
-        public int Run(int phaseSetting, int inputSignal)
+        public int Run(IEnumerable<int> input)
         {
-            Output = Engine.RunProgram(new int[] { phaseSetting, inputSignal });
+            Output = Engine.RunProgram(input);
             return Output;
         }
     }

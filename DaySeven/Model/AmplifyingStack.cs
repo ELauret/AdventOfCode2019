@@ -26,7 +26,7 @@ namespace DaySeven.Model
 
             for (int i = 0; i < Amplifiers.Count; i++)
             {
-                input = Amplifiers[i].Run(phaseSettingSequence.ElementAt(i), input);
+                input = Amplifiers[i].Run(new int[] { phaseSettingSequence.ElementAt(i), input });
             }
 
             return input;
