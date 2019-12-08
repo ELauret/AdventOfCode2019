@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DaySeven.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace DaySeven.Model.Tests

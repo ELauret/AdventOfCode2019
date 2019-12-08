@@ -1,7 +1,5 @@
 ﻿using DayFive.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DaySeven.Model
 {

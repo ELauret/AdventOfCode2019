@@ -1,8 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using DayFour.Model;
-using MoreLinq;
+﻿using DayFour.Model;
+using System;
 
 namespace DayFour
 {

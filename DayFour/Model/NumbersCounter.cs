@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MoreLinq;
 using System.Linq;
-using MoreLinq;
 
 namespace DayFour.Model
 {

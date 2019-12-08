@@ -1,8 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DayFour.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DayFour.Model.Tests
 {
@@ -22,7 +18,7 @@ namespace DayFour.Model.Tests
         [DataTestMethod]
         [DataRow(10, 99, 36)]
         [DataRow(100, 999, 84)]
-        [DataRow(1000,9999,126)]
+        [DataRow(1000, 9999, 126)]
         public void WithStrictlyIncreasingDigitsTest(int minimum, int maximum, int expectedCount)
         {
             var count = NumbersCounter.WithStrictlyIncreasingDigits(minimum, maximum);
@@ -31,7 +27,7 @@ namespace DayFour.Model.Tests
 
         [DataTestMethod]
         [DataRow(10, 99, 9)]
-        [DataRow(100,999,81)]
+        [DataRow(100, 999, 81)]
         [DataRow(1000, 9999, 369)]
         public void WithIncreasingDigitsAdjacentIdenticalPair(int minimum, int maximum, int expectedCount)
         {

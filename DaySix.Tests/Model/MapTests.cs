@@ -1,8 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DaySix.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DaySix.Model.Tests
 {

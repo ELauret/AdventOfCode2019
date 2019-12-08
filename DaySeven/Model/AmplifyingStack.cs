@@ -1,8 +1,7 @@
-﻿using System;
+﻿using DayFive.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using DayFive.Model;
 
 namespace DaySeven.Model
 {
@@ -35,8 +34,7 @@ namespace DaySeven.Model
 
             for (int i = 0; i < Amplifiers.Count; i++)
             {
-                var status = Amplifiers[i].Run(
-                    new int[] { phaseSettingSequence.ElementAt(i), input }, ref output);
+                _ = Amplifiers[i].Run(new int[] { phaseSettingSequence.ElementAt(i), input }, ref output);
                 input = output;
             }
 
@@ -80,7 +78,7 @@ namespace DaySeven.Model
             else return new int[] { input };
         }
 
-        public (int output,IEnumerable<int> phaseSettings) Optimize(int input, bool looping)
+        public (int output, IEnumerable<int> phaseSettings) Optimize(int input, bool looping)
         {
             var configurations = new List<(int output, IEnumerable<int> phaseSettings)>();
             var phaseSettingRange = GetPhaseSettingRange(looping);
