@@ -25,6 +25,17 @@ namespace DayHeight.Model
             }
         }
 
+        public PictureLayer(int width, int height)
+        {
+            Width = width;
+            Height = height;
+            Rows = new LayerRow[Height];
+            for (int i = 0; i < Height; i++)
+            {
+                Rows[i] = new LayerRow(Width);
+            }
+        }
+
         public int CountOfZeroDigits()
         {
             return Rows.Sum(r => r.CountOfZeroDigits());
@@ -35,6 +46,14 @@ namespace DayHeight.Model
             var flatenedLayer = Rows.SelectMany(r => r.PixelColors);
 
             return flatenedLayer.Count(c => c == 1) * flatenedLayer.Count(c => c == 2);
+        }
+
+        public void Print()
+        {
+            foreach (var row in Rows)
+            {
+                Console.WriteLine(string.Join("", row.PixelColors).Replace('0', ' '));
+            }
         }
     }
 }

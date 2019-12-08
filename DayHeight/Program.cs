@@ -24,8 +24,12 @@ namespace DayHeight
                 var picture = new Picture(width, height, lines[0]);
 
                 var layer = picture.GetLayerWithFewestZeroDigits();
-
                 Console.WriteLine(layer.LayerCheck());
+
+                Console.WriteLine();
+
+                var finalPicture = picture.Decode();
+                finalPicture.Print();
             }
             catch (Exception ex)
             {

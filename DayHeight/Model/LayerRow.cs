@@ -21,6 +21,12 @@ namespace DayHeight.Model
             }
         }
 
+        public LayerRow(int width)
+        {
+            Width = width;
+            PixelColors = new int[Width];
+        }
+
         public int CountOfZeroDigits()
         {
             return PixelColors.Count(c => c == 0);
