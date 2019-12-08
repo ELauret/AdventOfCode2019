@@ -29,5 +29,12 @@ namespace DayHeight.Model
         {
             return Rows.Sum(r => r.CountOfZeroDigits());
         }
+
+        public int LayerCheck()
+        {
+            var flatenedLayer = Rows.SelectMany(r => r.PixelColors);
+
+            return flatenedLayer.Count(c => c == 1) * flatenedLayer.Count(c => c == 2);
+        }
     }
 }
