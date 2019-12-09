@@ -27,9 +27,16 @@ namespace DayFive.Model
             InstructionPointer += 4;
         }
 
-        private void OpcodeThree_ReadInput()
+        private void OpcodeThree_ReadInput(InstructionCode instruction)
         {
-            WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 1]), Input.Dequeue());
+            if (instruction.FirstParameter == ParameterMode.Position)
+            {
+                WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 1]), Input.Dequeue());
+            }
+            else if (instruction.FirstParameter == ParameterMode.Relative)
+            {
+                WriteToMemoryAt(RelativeBase + CheckPointer(Memory[InstructionPointer + 1]), Input.Dequeue());
+            }
 
             InstructionPointer += 2;
         }
@@ -83,7 +90,7 @@ namespace DayFive.Model
 
         private void OpcodeNine_UpdateRelativeBase(InstructionCode instruction)
         {
-            RelativeBase += CheckPointer(ProcessParameter(CheckPointer(Memory[InstructionPointer + 1]),instruction.FirstParameter));
+            RelativeBase += CheckPointer(ProcessParameter(InstructionPointer + 1,instruction.FirstParameter));
 
             InstructionPointer += 2;
         }
