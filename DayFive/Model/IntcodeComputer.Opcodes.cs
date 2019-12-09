@@ -1,37 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DayFive.Model
 {
     public partial class IntcodeComputer
     {
-        private void OpcodeOne(InstructionCode instruction)
+        private void OpcodeOne_AddTwoNumbers(InstructionCode instruction)
         {
-            Memory[Memory[InstructionPointer + 3]] =
-                ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
-                + ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
+            var value = ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
+                        + ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
+
+            WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), value);
 
             InstructionPointer += 4;
         }
 
-        private void OpcodeTwo(InstructionCode instruction)
+        private void OpcodeTwo_MultiplyTwoNumbers(InstructionCode instruction)
         {
-            Memory[Memory[InstructionPointer + 3]] =
-                ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
-                * ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
+            var value = ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
+                        * ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
+
+            WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), value);
 
             InstructionPointer += 4;
         }
 
-        private void OpcodeThree()
+        private void OpcodeThree_ReadInput()
         {
-            Memory[Memory[InstructionPointer + 1]] = Input.Dequeue();
+            WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 1]), Input.Dequeue());
 
             InstructionPointer += 2;
         }
 
-        private int OpcodeFour(InstructionCode instruction)
+        private long OpcodeFour_ReturnOutput(InstructionCode instruction)
         {
             var output = ProcessParameter(InstructionPointer + 1, instruction.FirstParameter);
 
@@ -40,48 +43,91 @@ namespace DayFive.Model
             return output;
         }
 
-        private void OpcodeFive(InstructionCode instruction)
+        private void OpcodeFive_JumpIfTrue(InstructionCode instruction)
         {
             if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter) != 0)
-                InstructionPointer = ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
+                InstructionPointer = CheckPointer(ProcessParameter(InstructionPointer + 2, instruction.SecondParameter));
             else
                 InstructionPointer += 3;
         }
 
-        private void OpcodeSix(InstructionCode instruction)
+        private void OpcodeSix_JumpIfFalse(InstructionCode instruction)
         {
             if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter) == 0)
-                InstructionPointer = ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
+                InstructionPointer = CheckPointer(ProcessParameter(InstructionPointer + 2, instruction.SecondParameter));
             else
                 InstructionPointer += 3;
         }
 
-        private void OpcodeSeven(InstructionCode instruction)
+        private void OpcodeSeven_LessThan(InstructionCode instruction)
         {
             if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
                 < ProcessParameter(InstructionPointer + 2, instruction.SecondParameter))
-                Memory[Memory[InstructionPointer + 3]] = 1;
+                WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), 1);
             else
-                Memory[Memory[InstructionPointer + 3]] = 0;
+                WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), 0);
 
             InstructionPointer += 4;
         }
 
-        private void OpcodeHeigth(InstructionCode instruction)
+        private void OpcodeHeigth_AreEqual(InstructionCode instruction)
         {
             if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
                == ProcessParameter(InstructionPointer + 2, instruction.SecondParameter))
-                Memory[Memory[InstructionPointer + 3]] = 1;
+                WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), 1);
             else
-                Memory[Memory[InstructionPointer + 3]] = 0;
+                WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), 0);
 
             InstructionPointer += 4;
         }
 
-        private int ProcessParameter(int pointer, ParameterMode mode)
+        private void OpcodeNine_UpdateRelativeBase(InstructionCode instruction)
         {
-            if (mode == ParameterMode.Position) return Memory[Memory[pointer]];
-            else return Memory[pointer];
+            RelativeBase += CheckPointer(ProcessParameter(CheckPointer(Memory[InstructionPointer + 1]),instruction.FirstParameter));
+
+            InstructionPointer += 2;
+        }
+
+        private long ProcessParameter(int pointer, ParameterMode mode)
+        {
+            if (mode == ParameterMode.Position) return ReadMemoryAt(CheckPointer(Memory[pointer]));
+            else if (mode == ParameterMode.Relative) return ReadMemoryAt(RelativeBase + CheckPointer(Memory[pointer]));
+            else return ReadMemoryAt(pointer);
+        }
+
+        private int CheckPointer(long pointer)
+        {
+            return CheckMemoryValueIsInt(pointer);
+        }
+
+        private void WriteToMemoryAt(int pointer, long value)
+        {
+            var memorySize = Memory.Count;
+
+            if (pointer >= memorySize)
+            {
+                for (int i = 0; i < pointer + 1 - memorySize; i++)
+                {
+                    Memory.Add(0);
+                }
+            }
+
+            Memory[pointer] = value;
+        }
+
+        private long ReadMemoryAt(int pointer)
+        {
+            var memorySize = Memory.Count;
+
+            if (pointer >= memorySize)
+            {
+                for (int i = 0; i < pointer + 1 - memorySize; i++)
+                {
+                    Memory.Add(0);
+                }
+            }
+
+            return Memory[pointer];
         }
     }
 }

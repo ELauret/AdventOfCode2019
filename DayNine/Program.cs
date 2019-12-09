@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace DayFive
+namespace DayNine
 {
     class Program
     {
@@ -31,6 +31,7 @@ namespace DayFive
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
             }
         }
     }

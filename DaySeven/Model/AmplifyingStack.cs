@@ -19,35 +19,35 @@ namespace DaySeven.Model
             }
         }
 
-        public int Run(int input, IEnumerable<int> phaseSettingSequence, bool looping)
+        public long Run(long input, IEnumerable<int> phaseSettingSequence, bool looping)
         {
             if (looping) return RunLooping(input, phaseSettingSequence);
             else return RunDirect(input, phaseSettingSequence);
         }
 
-        public int RunDirect(int input, IEnumerable<int> phaseSettingSequence)
+        public long RunDirect(long input, IEnumerable<int> phaseSettingSequence)
         {
             if (phaseSettingSequence.Count() != Amplifiers.Count)
                 throw new ArgumentException($"Phase setting sequence is invalid");
 
-            int output = int.MinValue;
+            long output = int.MinValue;
 
             for (int i = 0; i < Amplifiers.Count; i++)
             {
-                _ = Amplifiers[i].Run(new int[] { phaseSettingSequence.ElementAt(i), input }, ref output);
+                _ = Amplifiers[i].Run(new long[] { phaseSettingSequence.ElementAt(i), input }, ref output);
                 input = output;
             }
 
             return output;
         }
 
-        public int RunLooping(int input, IEnumerable<int> phaseSettingSequence)
+        public long RunLooping(long input, IEnumerable<int> phaseSettingSequence)
         {
             if (phaseSettingSequence.Count() != Amplifiers.Count)
                 throw new ArgumentException($"Phase setting sequence is invalid");
 
             var queue = new Queue<Amplifier>(Amplifiers);
-            var output = int.MinValue;
+            var output = long.MinValue;
             var amplifierId = 0;
 
             var phaseSettings = phaseSettingSequence.ToArray();
@@ -66,21 +66,21 @@ namespace DaySeven.Model
             return output;
         }
 
-        public IEnumerable<int> WriteProgramInput(int ampliId, int input, int[] phaseSettings)
+        public IEnumerable<long> WriteProgramInput(int ampliId, long input, int[] phaseSettings)
         {
             if (phaseSettings[ampliId] >= 0)
             {
                 var phaseSetting = phaseSettings[ampliId];
                 phaseSettings[ampliId] = int.MinValue;
 
-                return new int[] { phaseSetting, input };
+                return new long[] { phaseSetting, input };
             }
-            else return new int[] { input };
+            else return new long[] { input };
         }
 
-        public (int output, IEnumerable<int> phaseSettings) Optimize(int input, bool looping)
+        public (long output, IEnumerable<int> phaseSettings) Optimize(int input, bool looping)
         {
-            var configurations = new List<(int output, IEnumerable<int> phaseSettings)>();
+            var configurations = new List<(long output, IEnumerable<int> phaseSettings)>();
             var phaseSettingRange = GetPhaseSettingRange(looping);
 
             for (int i = phaseSettingRange[0]; i < phaseSettingRange[1]; i++)

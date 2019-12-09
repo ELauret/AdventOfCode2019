@@ -20,7 +20,7 @@ namespace DaySeven.Model
             Engine.Reset();
         }
 
-        public ProgramStatus Run(IEnumerable<int> input, ref int output)
+        public ProgramStatus Run(IEnumerable<long> input, ref long output)
         {
             return Engine.RunProgram(input, ref output);
         }
