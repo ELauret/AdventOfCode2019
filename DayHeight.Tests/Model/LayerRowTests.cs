@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DayHeight.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using MoreLinq;
 
 namespace DayHeight.Model.Tests
 {

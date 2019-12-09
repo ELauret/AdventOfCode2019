@@ -1,8 +1,6 @@
-﻿using System;
+﻿using MoreLinq;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using MoreLinq;
 
 namespace DayHeight.Model
 {
