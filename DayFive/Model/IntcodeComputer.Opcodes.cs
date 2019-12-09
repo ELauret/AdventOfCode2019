@@ -9,41 +9,34 @@ namespace DayFive.Model
     {
         private void OpcodeOne_AddTwoNumbers(InstructionCode instruction)
         {
-            var value = ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
-                        + ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
+            var value = ProcessReadParameter(InstructionPointer + 1, instruction.FirstParameter)
+                        + ProcessReadParameter(InstructionPointer + 2, instruction.SecondParameter);
 
-            WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), value);
+            WriteToMemoryAt(ProcessWriteParameter(InstructionPointer + 3, instruction.ThirdParameter), value);
 
             InstructionPointer += 4;
         }
 
         private void OpcodeTwo_MultiplyTwoNumbers(InstructionCode instruction)
         {
-            var value = ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
-                        * ProcessParameter(InstructionPointer + 2, instruction.SecondParameter);
+            var value = ProcessReadParameter(InstructionPointer + 1, instruction.FirstParameter)
+                        * ProcessReadParameter(InstructionPointer + 2, instruction.SecondParameter);
 
-            WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), value);
+            WriteToMemoryAt(ProcessWriteParameter(InstructionPointer + 3, instruction.ThirdParameter), value);
 
             InstructionPointer += 4;
         }
 
         private void OpcodeThree_ReadInput(InstructionCode instruction)
         {
-            if (instruction.FirstParameter == ParameterMode.Position)
-            {
-                WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 1]), Input.Dequeue());
-            }
-            else if (instruction.FirstParameter == ParameterMode.Relative)
-            {
-                WriteToMemoryAt(RelativeBase + CheckPointer(Memory[InstructionPointer + 1]), Input.Dequeue());
-            }
+            WriteToMemoryAt(ProcessWriteParameter(InstructionPointer + 1, instruction.FirstParameter), Input.Dequeue());
 
             InstructionPointer += 2;
         }
 
         private long OpcodeFour_ReturnOutput(InstructionCode instruction)
         {
-            var output = ProcessParameter(InstructionPointer + 1, instruction.FirstParameter);
+            var output = ProcessReadParameter(InstructionPointer + 1, instruction.FirstParameter);
 
             InstructionPointer += 2;
 
@@ -52,54 +45,61 @@ namespace DayFive.Model
 
         private void OpcodeFive_JumpIfTrue(InstructionCode instruction)
         {
-            if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter) != 0)
-                InstructionPointer = CheckPointer(ProcessParameter(InstructionPointer + 2, instruction.SecondParameter));
+            if (ProcessReadParameter(InstructionPointer + 1, instruction.FirstParameter) != 0)
+                InstructionPointer = CheckPointer(ProcessReadParameter(InstructionPointer + 2, instruction.SecondParameter));
             else
                 InstructionPointer += 3;
         }
 
         private void OpcodeSix_JumpIfFalse(InstructionCode instruction)
         {
-            if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter) == 0)
-                InstructionPointer = CheckPointer(ProcessParameter(InstructionPointer + 2, instruction.SecondParameter));
+            if (ProcessReadParameter(InstructionPointer + 1, instruction.FirstParameter) == 0)
+                InstructionPointer = CheckPointer(ProcessReadParameter(InstructionPointer + 2, instruction.SecondParameter));
             else
                 InstructionPointer += 3;
         }
 
         private void OpcodeSeven_LessThan(InstructionCode instruction)
         {
-            if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
-                < ProcessParameter(InstructionPointer + 2, instruction.SecondParameter))
-                WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), 1);
+            if (ProcessReadParameter(InstructionPointer + 1, instruction.FirstParameter)
+                < ProcessReadParameter(InstructionPointer + 2, instruction.SecondParameter))
+                WriteToMemoryAt(ProcessWriteParameter(InstructionPointer + 3, instruction.ThirdParameter), 1);
             else
-                WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), 0);
+                WriteToMemoryAt(ProcessWriteParameter(InstructionPointer + 3, instruction.ThirdParameter), 0);
 
             InstructionPointer += 4;
         }
 
         private void OpcodeHeigth_AreEqual(InstructionCode instruction)
         {
-            if (ProcessParameter(InstructionPointer + 1, instruction.FirstParameter)
-               == ProcessParameter(InstructionPointer + 2, instruction.SecondParameter))
-                WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), 1);
+            if (ProcessReadParameter(InstructionPointer + 1, instruction.FirstParameter)
+               == ProcessReadParameter(InstructionPointer + 2, instruction.SecondParameter))
+                WriteToMemoryAt(ProcessWriteParameter(InstructionPointer + 3, instruction.ThirdParameter), 1);
             else
-                WriteToMemoryAt(CheckPointer(Memory[InstructionPointer + 3]), 0);
+                WriteToMemoryAt(ProcessWriteParameter(InstructionPointer + 3, instruction.ThirdParameter), 0);
 
             InstructionPointer += 4;
         }
 
         private void OpcodeNine_UpdateRelativeBase(InstructionCode instruction)
         {
-            RelativeBase += CheckPointer(ProcessParameter(InstructionPointer + 1,instruction.FirstParameter));
+            RelativeBase += CheckPointer(ProcessReadParameter(InstructionPointer + 1,instruction.FirstParameter));
 
             InstructionPointer += 2;
         }
 
-        private long ProcessParameter(int pointer, ParameterMode mode)
+        private long ProcessReadParameter(int pointer, ParameterMode mode)
         {
             if (mode == ParameterMode.Position) return ReadMemoryAt(CheckPointer(Memory[pointer]));
             else if (mode == ParameterMode.Relative) return ReadMemoryAt(RelativeBase + CheckPointer(Memory[pointer]));
             else return ReadMemoryAt(pointer);
+        }
+
+        private int ProcessWriteParameter(int pointer, ParameterMode mode)
+        {
+            if (mode == ParameterMode.Position) return CheckPointer(Memory[pointer]);
+            else if (mode == ParameterMode.Relative) return RelativeBase + CheckPointer(Memory[pointer]);
+            else throw new ArgumentException("Immediate mode is invalid for writing to the memory.");
         }
 
         private int CheckPointer(long pointer)

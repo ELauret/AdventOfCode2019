@@ -36,8 +36,6 @@ namespace DayFive.Model
 
             while (instructionCode.Opcode != 99)
             {
-                Console.WriteLine($"Opcode: {instructionCode.Opcode} Position: {InstructionPointer, 16}");
-
                 switch (instructionCode.Opcode)
                 {
                     case 1:
@@ -52,7 +50,6 @@ namespace DayFive.Model
                         break;
                     case 4:
                         output = OpcodeFour_ReturnOutput(instructionCode);
-                        Console.WriteLine($"\t Output: {output}");
                         break;
                     case 5:
                         OpcodeFive_JumpIfTrue(instructionCode);
@@ -68,7 +65,6 @@ namespace DayFive.Model
                         break;
                     case 9:
                         OpcodeNine_UpdateRelativeBase(instructionCode);
-                        Console.WriteLine($"\t Relative Base: {RelativeBase}");
                         break;
                     default:
                         break;
