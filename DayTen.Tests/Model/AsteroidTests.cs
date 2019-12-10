@@ -28,7 +28,7 @@ namespace DayTen.Model.Tests
             var map = new Map(mapFile);
             var asteroid = new Asteroid(xAsteroid, yAsteroid);
 
-            var count = asteroid.CountAsteriodsWithDirectLineOfSight(map.Asteroids);
+            var count = asteroid.CountAsteriodsWithDirectLineOfSight(map);
 
             Assert.AreEqual(expectedCount, count);
         }

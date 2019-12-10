@@ -22,7 +22,8 @@ namespace DayTen
 
                 var map = new Map(lines);
 
-                Console.WriteLine(map.MaxCountOfDetectableAteroids());
+                IAsteroid bestAsteroid;
+                Console.WriteLine(map.MaxCountOfDetectableAteroids(out bestAsteroid));
             }
             catch (Exception ex)
             {

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DayTen.Model
 {
-    public class Asteroid
+    public class Asteroid : IAsteroid
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -17,12 +17,15 @@ namespace DayTen.Model
             Y = y;
         }
 
-        public bool HasDirectLineOfSight(List<Asteroid> map, Asteroid targetAsteroid)
+        public Asteroid() { }
+
+        public bool HasDirectLineOfSight(Map map, Asteroid targetAsteroid)
         {
             if (map == null) throw new ArgumentNullException(nameof(map));
             if (targetAsteroid == null) throw new ArgumentNullException(nameof(targetAsteroid));
 
-            if (!BelongsTo(map) || !targetAsteroid.BelongsTo(map)) throw new ArgumentException("One or both asteroids do not belong to the map.");
+            if (!BelongsTo(map) || !targetAsteroid.BelongsTo(map))
+                throw new ArgumentException("One or both asteroids do not belong to the map.");
 
             var rangeX = GetRangeX(this, targetAsteroid);
             var rangeY = GetRangeY(this, targetAsteroid);
@@ -31,23 +34,24 @@ namespace DayTen.Model
             {
                 for (int j = rangeY.Min; j < rangeY.Max + 1; j++)
                 {
-                    var asteroid = map.Find(a => a.X == i && a.Y == j);
+                    var asteroid = map.Asteroids[j * map.Width + i];
 
-                    if (asteroid != null && !asteroid.Equals(this) && !asteroid.Equals(targetAsteroid)
-                        && asteroid.IsAlignedWith(this, targetAsteroid)) return false;
+                    if (asteroid.GetType() != typeof(NullAsteroid) && asteroid != null && !asteroid.Equals(this)
+                        && !asteroid.Equals(targetAsteroid) && ((Asteroid)asteroid).IsAlignedWith(this, targetAsteroid)) return false;
                 }
             }
 
             return true;
         }
 
-        public int CountAsteriodsWithDirectLineOfSight(List<Asteroid> map)
+        public int CountAsteriodsWithDirectLineOfSight(Map map)
         {
             var count = 0;
 
-            foreach (var asteroid in map)
+            foreach (var asteroid in map.Asteroids)
             {
-                if (!asteroid.Equals(this) && HasDirectLineOfSight(map, asteroid)) count++;
+                if (asteroid.GetType() != typeof(NullAsteroid) && !asteroid.Equals(this)
+                    && HasDirectLineOfSight(map, (Asteroid)asteroid)) count++;
             }
 
             return count;
@@ -55,18 +59,18 @@ namespace DayTen.Model
 
         public override bool Equals(object obj)
         {
-            var asteroid = obj as Asteroid;
+            var asteroid = obj as IAsteroid;
 
             if (asteroid == null) return false;
 
             return (X == asteroid.X) && (Y == asteroid.Y); ;
         }
 
-        public bool BelongsTo(List<Asteroid> map)
+        public bool BelongsTo(Map map)
         {
             if (map == null) return false;
 
-            return map.Contains(this);
+            return map.Asteroids.Contains(this);
         }
 
         public bool IsAlignedWith(Asteroid firstAsteroid, Asteroid secondAsteroid)
@@ -75,7 +79,7 @@ namespace DayTen.Model
 
             var determinant = X * (firstAsteroid.Y - secondAsteroid.Y)
                 + firstAsteroid.X * (secondAsteroid.Y - Y) + secondAsteroid.X * (Y - firstAsteroid.Y);
-            
+
             if (determinant == 0) return true;
 
             return false;
