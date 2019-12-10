@@ -22,7 +22,7 @@ namespace DayTen
 
                 var map = new Map(lines);
 
-                IAsteroid bestAsteroid;
+                Asteroid bestAsteroid;
                 Console.WriteLine(map.MaxCountOfDetectableAteroids(out bestAsteroid));
 
                 var lazer = new RotatingLazer(bestAsteroid);

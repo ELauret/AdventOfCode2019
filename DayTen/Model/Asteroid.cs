@@ -7,20 +7,14 @@ using System.Text;
 
 namespace DayTen.Model
 {
-    public class Asteroid : IAsteroid
+    public class Asteroid : Location
     {
-        public int X { get; set; }
-        public int Y { get; set; }
         public double Radius { get; set; }
         public double Angle { get; set; }
 
-        public Asteroid(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
-
         public Asteroid() { }
+
+        public Asteroid(int x, int y) : base(x, y) { }
 
         public bool HasDirectLineOfSight(Map map, Asteroid targetAsteroid)
         {
@@ -37,9 +31,9 @@ namespace DayTen.Model
             {
                 for (int j = rangeY.Min; j < rangeY.Max + 1; j++)
                 {
-                    var asteroid = map.Asteroids[j * map.Width + i];
+                    var asteroid = map.Locations[j * map.Width + i];
 
-                    if (asteroid.GetType() != typeof(NullAsteroid) && asteroid != null && !asteroid.Equals(this)
+                    if (asteroid.GetType() != typeof(EmptyLocation) && asteroid != null && !asteroid.Equals(this)
                         && !asteroid.Equals(targetAsteroid) && ((Asteroid)asteroid).IsAlignedWith(this, targetAsteroid)) return false;
                 }
             }
@@ -47,36 +41,20 @@ namespace DayTen.Model
             return true;
         }
 
-        public int CountAsteriodsWithDirectLineOfSight(Map map)
+        public int CountAsteroidsWithDirectLineOfSight(Map map)
         {
             var count = 0;
 
-            foreach (var asteroid in map.Asteroids)
+            foreach (var asteroid in map.Locations)
             {
-                if (asteroid.GetType() != typeof(NullAsteroid) && !asteroid.Equals(this)
+                if (asteroid.GetType() != typeof(EmptyLocation) && !asteroid.Equals(this)
                     && HasDirectLineOfSight(map, (Asteroid)asteroid)) count++;
             }
 
             return count;
         }
 
-        public override bool Equals(object obj)
-        {
-            var asteroid = obj as IAsteroid;
-
-            if (asteroid == null) return false;
-
-            return (X == asteroid.X) && (Y == asteroid.Y); ;
-        }
-
-        public bool BelongsTo(Map map)
-        {
-            if (map == null) return false;
-
-            return map.Asteroids.Contains(this);
-        }
-
-        public bool IsAlignedWith(IAsteroid firstAsteroid, IAsteroid secondAsteroid)
+        public bool IsAlignedWith(ILocation firstAsteroid, ILocation secondAsteroid)
         {
             if (firstAsteroid == null || secondAsteroid == null) throw new ArgumentNullException();
 
@@ -88,7 +66,7 @@ namespace DayTen.Model
             return false;
         }
 
-        public static (int Min, int Max) GetRangeX(IAsteroid firstAsteroid, IAsteroid secondAsteroid)
+        public static (int Min, int Max) GetRangeX(ILocation firstAsteroid, ILocation secondAsteroid)
         {
             if (firstAsteroid == null || secondAsteroid == null) throw new ArgumentNullException();
 
@@ -96,7 +74,7 @@ namespace DayTen.Model
             else return (secondAsteroid.X, firstAsteroid.X);
         }
 
-        public static (int Min, int Max) GetRangeY(IAsteroid firstAsteroid, IAsteroid secondAsteroid)
+        public static (int Min, int Max) GetRangeY(ILocation firstAsteroid, ILocation secondAsteroid)
         {
             if (firstAsteroid == null || secondAsteroid == null) throw new ArgumentNullException();
 
@@ -104,20 +82,7 @@ namespace DayTen.Model
             else return (secondAsteroid.Y, firstAsteroid.Y);
         }
 
-        public override string ToString()
-        {
-            if (Radius > 0.0) return $"Ac({X},{Y})\tAp({Radius:F3},{Angle * 180 / Math.PI:F3})";            
-            else return $"Ac({X},{Y})";
-        }
-
-        public int DistanceTo(IAsteroid asteroid)
-        {
-            if (asteroid == null) throw new ArgumentNullException(nameof(asteroid));
-
-            return Math.Abs(X - asteroid.X) + Math.Abs(Y - asteroid.Y);
-        }
-
-        public void GetPolarCoordinatesFrom(IAsteroid asteroid)
+        public void GetPolarCoordinatesFrom(ILocation asteroid)
         {
             if (asteroid == null) throw new ArgumentNullException(nameof(asteroid));
 
@@ -133,6 +98,12 @@ namespace DayTen.Model
             if (angle < 0.0) angle += 2 * Math.PI;
 
             return angle;
+        }
+
+        public override string ToString()
+        {
+            if (Radius > 0.0) return base.ToString() + $"\tAp({Radius:F3},{Angle * 180 / Math.PI:F3})";
+            else return base.ToString();
         }
     }
 }

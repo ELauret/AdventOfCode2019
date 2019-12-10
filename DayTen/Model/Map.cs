@@ -9,7 +9,7 @@ namespace DayTen.Model
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public List<IAsteroid> Asteroids { get; }
+        public List<ILocation> Locations { get; }
 
         public Map(string[] mapFile)
         {
@@ -19,29 +19,31 @@ namespace DayTen.Model
             Height = mapFile.Length;
             Width = mapFile[0].Length;
 
-            Asteroids = new List<IAsteroid>();
+            Locations = new List<ILocation>();
             for (int i = 0; i < Height; i++)
             {
                 for (int j = 0; j < Width; j++)
                 {
-                    if (mapFile[i][j].Equals('#')) Asteroids.Add(new Asteroid(j, i));
-                    else Asteroids.Add(new NullAsteroid(j, i));
+                    if (mapFile[i][j].Equals('#')) Locations.Add(new Asteroid(j, i));
+                    else Locations.Add(new EmptyLocation(j, i));
                 }
             }
         }
 
-        public int MaxCountOfDetectableAteroids(out IAsteroid bestAsteroid)
+        public int MaxCountOfDetectableAteroids(out Asteroid bestAsteroid)
         {
             bestAsteroid = new Asteroid();
 
             var maxCount = 0;
-            foreach (var asteroid in Asteroids)
+            foreach (var location in Locations)
             {
-                var count = asteroid.CountAsteriodsWithDirectLineOfSight(this);
+                if (location.GetType() != typeof(Asteroid)) continue;
+
+                var count = ((Asteroid)location).CountAsteroidsWithDirectLineOfSight(this);
                 if (count > maxCount)
                 {
                     maxCount = count;
-                    bestAsteroid = asteroid;
+                    bestAsteroid = (Asteroid)location;
                 }
             }
 

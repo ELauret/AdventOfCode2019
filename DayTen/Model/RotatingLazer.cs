@@ -7,21 +7,21 @@ namespace DayTen.Model
 {
     public class RotatingLazer
     {
-        public IAsteroid Location { get; set; }
+        public ILocation Location { get; set; }
 
-        public RotatingLazer(IAsteroid asteroid)
+        public RotatingLazer(ILocation asteroid)
         {
             if (asteroid == null) throw new ArgumentNullException(nameof(asteroid));
             Location = asteroid;
         }
 
-        public IAsteroid VaporizeAsteroids(Map map, int count)
+        public ILocation VaporizeAsteroids(Map map, int count)
         {
             if (map == null) throw new ArgumentNullException(nameof(map));
 
             var asteroidsToVaporize = new List<Asteroid>();
 
-            foreach (var location in map.Asteroids)
+            foreach (var location in map.Locations)
             {
                 if (location.GetType() == typeof(Asteroid) && !location.Equals(Location))
                 {
@@ -31,7 +31,7 @@ namespace DayTen.Model
                 }
             }
 
-            if (asteroidsToVaporize.Count < count) return new NullAsteroid();
+            if (asteroidsToVaporize.Count < count) return new EmptyLocation();
 
             asteroidsToVaporize = OrderAsteroidsByAngleAndRadius(asteroidsToVaporize);
 

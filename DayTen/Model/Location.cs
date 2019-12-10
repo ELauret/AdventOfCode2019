@@ -4,14 +4,14 @@ using System.Text;
 
 namespace DayTen.Model
 {
-    public class NullAsteroid : IAsteroid
+    public abstract class Location : ILocation
     {
         public int X { get; set; }
         public int Y { get; set; }
 
-        public NullAsteroid() { }
+        public Location() { }
 
-        public NullAsteroid(int x, int y)
+        public Location(int x, int y)
         {
             X = x;
             Y = y;
@@ -21,17 +21,19 @@ namespace DayTen.Model
         {
             if (map == null) return false;
 
-            return map.Asteroids.Contains(this);
+            return map.Locations.Contains(this);
         }
 
-        public int CountAsteriodsWithDirectLineOfSight(Map map)
+        public int DistanceTo(ILocation location)
         {
-            return 0;
+            if (location == null) throw new ArgumentNullException(nameof(location));
+
+            return Math.Abs(X - location.X) + Math.Abs(Y - location.Y);
         }
 
         public override bool Equals(object obj)
         {
-            var asteroid = obj as IAsteroid;
+            var asteroid = obj as ILocation;
 
             if (asteroid == null) return false;
 
@@ -40,14 +42,7 @@ namespace DayTen.Model
 
         public override string ToString()
         {
-            return $"A({ X},{ Y}) This is a Null asteroid.";
-        }
-
-        public int DistanceTo(IAsteroid asteroid)
-        {
-            if (asteroid == null) throw new ArgumentNullException(nameof(asteroid));
-
-            return Math.Abs(X - asteroid.X) + Math.Abs(Y - asteroid.Y);
+            return $"Ac({X},{Y})";
         }
     }
 }

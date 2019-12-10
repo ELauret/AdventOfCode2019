@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DayTen.Model
 {
-    public interface IAsteroid
+    public interface ILocation
     {
         int X { get; set; }
         int Y { get; set; }
@@ -12,7 +12,6 @@ namespace DayTen.Model
         string ToString();
         bool Equals(object obj);
         bool BelongsTo(Map map);
-        int CountAsteriodsWithDirectLineOfSight(Map map);
-        int DistanceTo(IAsteroid asteroid);
+        int DistanceTo(ILocation location);
     }
 }
