@@ -112,6 +112,8 @@ namespace DayTen.Model
 
         public int DistanceTo(IAsteroid asteroid)
         {
+            if (asteroid == null) throw new ArgumentNullException(nameof(asteroid));
+
             return Math.Abs(X - asteroid.X) + Math.Abs(Y - asteroid.Y);
         }
 
@@ -122,7 +124,15 @@ namespace DayTen.Model
             var complex = new Complex(X - asteroid.X, Y - asteroid.Y);
 
             Radius = complex.Magnitude;
-            Angle = complex.Phase;
+            Angle = ChangeAngleToClockwiseFromNorth(complex.Phase);
+        }
+
+        private static double ChangeAngleToClockwiseFromNorth(double angle)
+        {
+            angle = angle + Math.PI / 2;
+            if (angle < 0.0) angle += 2 * Math.PI;
+
+            return angle;
         }
     }
 }

@@ -26,16 +26,20 @@ namespace DayTen.Model
                 if (location.GetType() == typeof(Asteroid) && !location.Equals(Location))
                 {
                     var asteroid = location as Asteroid;
-
                     asteroid.GetPolarCoordinatesFrom(Location);
-                    asteroid.Angle = asteroid.Angle + Math.PI / 2;
-                    if (asteroid.Angle < 0.0) asteroid.Angle += 2 * Math.PI;
                     asteroidsToVaporize.Add(asteroid);
                 }
             }
 
             if (asteroidsToVaporize.Count < count) return new NullAsteroid();
 
+            asteroidsToVaporize = OrderAsteroidsByAngleAndRadius(asteroidsToVaporize);
+
+            return asteroidsToVaporize[count - 1];
+        }
+
+        private static List<Asteroid> OrderAsteroidsByAngleAndRadius(List<Asteroid> asteroidsToVaporize)
+        {
             var orderedList = new List<Asteroid>();
 
             var groups = asteroidsToVaporize.GroupBy(a => a.Angle);
@@ -52,7 +56,7 @@ namespace DayTen.Model
 
             asteroidsToVaporize = orderedList.OrderBy(a => a.Angle).ToList();
 
-            return asteroidsToVaporize[count - 1];
+            return asteroidsToVaporize;
         }
     }
 }

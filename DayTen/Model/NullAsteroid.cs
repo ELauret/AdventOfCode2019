@@ -45,6 +45,8 @@ namespace DayTen.Model
 
         public int DistanceTo(IAsteroid asteroid)
         {
+            if (asteroid == null) throw new ArgumentNullException(nameof(asteroid));
+
             return Math.Abs(X - asteroid.X) + Math.Abs(Y - asteroid.Y);
         }
     }
