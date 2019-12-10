@@ -73,7 +73,7 @@ namespace DayTen.Model
             return map.Asteroids.Contains(this);
         }
 
-        public bool IsAlignedWith(Asteroid firstAsteroid, Asteroid secondAsteroid)
+        public bool IsAlignedWith(IAsteroid firstAsteroid, IAsteroid secondAsteroid)
         {
             if (firstAsteroid == null || secondAsteroid == null) throw new ArgumentNullException();
 
@@ -85,7 +85,7 @@ namespace DayTen.Model
             return false;
         }
 
-        public static (int Min, int Max) GetRangeX(Asteroid firstAsteroid, Asteroid secondAsteroid)
+        public static (int Min, int Max) GetRangeX(IAsteroid firstAsteroid, IAsteroid secondAsteroid)
         {
             if (firstAsteroid == null || secondAsteroid == null) throw new ArgumentNullException();
 
@@ -93,7 +93,7 @@ namespace DayTen.Model
             else return (secondAsteroid.X, firstAsteroid.X);
         }
 
-        public static (int Min, int Max) GetRangeY(Asteroid firstAsteroid, Asteroid secondAsteroid)
+        public static (int Min, int Max) GetRangeY(IAsteroid firstAsteroid, IAsteroid secondAsteroid)
         {
             if (firstAsteroid == null || secondAsteroid == null) throw new ArgumentNullException();
 
@@ -104,6 +104,11 @@ namespace DayTen.Model
         public override string ToString()
         {
             return $"A({X},{Y})";
+        }
+
+        public int DistanceTo(IAsteroid asteroid)
+        {
+            return Math.Abs(X - asteroid.X) + Math.Abs(Y - asteroid.Y);
         }
     }
 }

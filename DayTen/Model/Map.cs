@@ -47,5 +47,13 @@ namespace DayTen.Model
 
             return maxCount;
         }
+
+        public void NextBorderCoordinates(ref int i, ref int j)
+        {
+            if (i == 0 && j > 0) j--;
+            else if (i == Width - 1 && j < Height - 1) j++;
+            else if (j == 0 && i < Width - 1) i++;
+            else if (i > 0) i--;
+        }
     }
 }

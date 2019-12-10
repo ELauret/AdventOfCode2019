@@ -40,5 +40,10 @@ namespace DayTen.Model
         {
             return $"A({ X},{ Y}) This is a Null asteroid.";
         }
+
+        public int DistanceTo(IAsteroid asteroid)
+        {
+            return Math.Abs(X - asteroid.X) + Math.Abs(Y - asteroid.Y);
+        }
     }
 }

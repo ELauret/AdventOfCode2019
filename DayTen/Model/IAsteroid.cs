@@ -13,5 +13,6 @@ namespace DayTen.Model
         bool Equals(object obj);
         bool BelongsTo(Map map);
         int CountAsteriodsWithDirectLineOfSight(Map map);
+        int DistanceTo(IAsteroid asteroid);
     }
 }
