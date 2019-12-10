@@ -7,26 +7,52 @@ namespace DayTen.Model
 {
     public class RotatingLazer
     {
-        public Asteroid Location { get; set; }
+        public IAsteroid Location { get; set; }
 
-        public RotatingLazer(Asteroid asteroid)
+        public RotatingLazer(IAsteroid asteroid)
         {
             if (asteroid == null) throw new ArgumentNullException(nameof(asteroid));
             Location = asteroid;
         }
 
-        //public Asteroid VaporizeAsteroids(Map map, int count)
-        //{
-        //    var x = Location.X;
-        //    var y = 0;
+        public IAsteroid VaporizeAsteroids(Map map, int count)
+        {
+            if (map == null) throw new ArgumentNullException(nameof(map));
 
-        //    while (count > 0)
-        //    {
-        //        var xRange = Asteroid.GetRangeX(Location, new NullAsteroid(x, y));
-        //        var yRange = Asteroid.GetRangeY(Location, new NullAsteroid(x, y));
+            var asteroidsToVaporize = new List<Asteroid>();
 
-        //        map.NextBorderCoordinates(ref x, ref y);
-        //    }
-        //}
+            foreach (var location in map.Asteroids)
+            {
+                if (location.GetType() == typeof(Asteroid) && !location.Equals(Location))
+                {
+                    var asteroid = location as Asteroid;
+
+                    asteroid.GetPolarCoordinatesFrom(Location);
+                    asteroid.Angle = asteroid.Angle + Math.PI / 2;
+                    if (asteroid.Angle < 0.0) asteroid.Angle += 2 * Math.PI;
+                    asteroidsToVaporize.Add(asteroid);
+                }
+            }
+
+            if (asteroidsToVaporize.Count < count) return new NullAsteroid();
+
+            var orderedList = new List<Asteroid>();
+
+            var groups = asteroidsToVaporize.GroupBy(a => a.Angle);
+            foreach (var group in groups)
+            {
+                var orderedGroup = group.OrderBy(a => a.Radius).ToArray();
+                for (int i = 0; i < orderedGroup.Count(); i++)
+                {
+                    orderedGroup[i].Angle += 2 * i * Math.PI;
+                }
+
+                orderedList.AddRange(orderedGroup);
+            }
+
+            asteroidsToVaporize = orderedList.OrderBy(a => a.Angle).ToList();
+
+            return asteroidsToVaporize[count - 1];
+        }
     }
 }

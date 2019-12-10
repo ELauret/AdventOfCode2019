@@ -24,6 +24,11 @@ namespace DayTen
 
                 IAsteroid bestAsteroid;
                 Console.WriteLine(map.MaxCountOfDetectableAteroids(out bestAsteroid));
+
+                var lazer = new RotatingLazer(bestAsteroid);
+                var lastVaporizedAsteroid = lazer.VaporizeAsteroids(map, 200);
+
+                Console.WriteLine(100 * lastVaporizedAsteroid.X + lastVaporizedAsteroid.Y);
             }
             catch (Exception ex)
             {

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Text;
 
 namespace DayTen.Model
@@ -10,6 +11,8 @@ namespace DayTen.Model
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public double Radius { get; set; }
+        public double Angle { get; set; }
 
         public Asteroid(int x, int y)
         {
@@ -103,12 +106,23 @@ namespace DayTen.Model
 
         public override string ToString()
         {
-            return $"A({X},{Y})";
+            if (Radius > 0.0) return $"Ac({X},{Y})\tAp({Radius:F3},{Angle * 180 / Math.PI:F3})";            
+            else return $"Ac({X},{Y})";
         }
 
         public int DistanceTo(IAsteroid asteroid)
         {
             return Math.Abs(X - asteroid.X) + Math.Abs(Y - asteroid.Y);
+        }
+
+        public void GetPolarCoordinatesFrom(IAsteroid asteroid)
+        {
+            if (asteroid == null) throw new ArgumentNullException(nameof(asteroid));
+
+            var complex = new Complex(X - asteroid.X, Y - asteroid.Y);
+
+            Radius = complex.Magnitude;
+            Angle = complex.Phase;
         }
     }
 }
