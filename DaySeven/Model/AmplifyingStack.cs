@@ -30,12 +30,12 @@ namespace DaySeven.Model
             if (phaseSettingSequence.Count() != Amplifiers.Count)
                 throw new ArgumentException($"Phase setting sequence is invalid");
 
-            long output = int.MinValue;
+            var output = long.MinValue;
 
             for (int i = 0; i < Amplifiers.Count; i++)
             {
-                _ = Amplifiers[i].Run(new long[] { phaseSettingSequence.ElementAt(i), input }, ref output);
-                input = output;
+                _ = Amplifiers[i].Run(new long[] { phaseSettingSequence.ElementAt(i), input });
+                input = output = Amplifiers[i].Output;
             }
 
             return output;
@@ -55,11 +55,13 @@ namespace DaySeven.Model
             while (queue.Any())
             {
                 var programInput = WriteProgramInput(amplifierId, input, phaseSettings);
-                var status = queue.Peek().Run(programInput, ref output);
-                input = output;
-                amplifierId = (amplifierId + 1) % 5;
 
                 var amplifier = queue.Dequeue();
+                var status = amplifier.Run(programInput);
+                input = output = amplifier.Output;
+
+                amplifierId = (amplifierId + 1) % 5;
+
                 if (status == ProgramStatus.WaitingForInput) queue.Enqueue(amplifier);
             }
 

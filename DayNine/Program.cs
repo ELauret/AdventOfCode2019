@@ -24,9 +24,8 @@ namespace DayNine
                 Console.WriteLine($"What is the input?");
                 var input = new long[] { int.Parse(Console.ReadLine()) };
 
-                long output = long.MinValue;
-                var status = computer.RunProgram(input, ref output);
-                Console.WriteLine(output);
+                var status = computer.RunProgram(input);
+                Console.WriteLine(computer.Output.Last());
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 ﻿using DayFive.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DaySeven.Model
 {
@@ -7,7 +8,7 @@ namespace DaySeven.Model
     {
         public int PhaseSetting { get; set; }
         public int InputSignale { get; set; }
-        public int Output { get; private set; }
+        public long Output { get; private set; }
         public IntcodeComputer Engine { get; private set; }
 
         public Amplifier(IEnumerable<int> program)
@@ -20,9 +21,11 @@ namespace DaySeven.Model
             Engine.Reset();
         }
 
-        public ProgramStatus Run(IEnumerable<long> input, ref long output)
+        public ProgramStatus Run(IEnumerable<long> input)
         {
-            return Engine.RunProgram(input, ref output);
+            var programStatus = Engine.RunProgram(input);
+            Output = Engine.Output.Last();
+            return programStatus;
         }
     }
 }

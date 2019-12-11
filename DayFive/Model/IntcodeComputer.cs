@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DayFive.Model
@@ -7,10 +8,9 @@ namespace DayFive.Model
     {
         public IEnumerable<long> Program { get; }
         public List<long> Memory { get; private set; }
-
         public Queue<long> Input { get; private set; }
+        public Queue<long> Output { get; private set; }
         public int InstructionPointer { get; private set; }
-
         public int RelativeBase { get; private set; }
 
         public IntcodeComputer(IEnumerable<long> program)
@@ -21,7 +21,7 @@ namespace DayFive.Model
 
         public IntcodeComputer(IEnumerable<int> program) : this(program.Select(e => (long)e).ToArray()) { }
 
-        public ProgramStatus RunProgram(IEnumerable<long> input, ref long output)
+        public ProgramStatus RunProgram(IEnumerable<long> input)
         {
             var instructionCode = new InstructionCode(CheckInstruction(Memory[InstructionPointer]));
 
@@ -48,7 +48,7 @@ namespace DayFive.Model
                         OpcodeThree_ReadInput(instructionCode);
                         break;
                     case 4:
-                        output = OpcodeFour_ReturnOutput(instructionCode);
+                        Output.Enqueue(OpcodeFour_ReturnOutput(instructionCode));
                         break;
                     case 5:
                         OpcodeFive_JumpIfTrue(instructionCode);
@@ -94,6 +94,7 @@ namespace DayFive.Model
         {
             Memory = new List<long>(Program.Select(e => (long)e));
             Input = new Queue<long>();
+            Output = new Queue<long>();
             InstructionPointer = 0;
             RelativeBase = 0;
         }

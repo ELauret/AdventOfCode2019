@@ -15,8 +15,7 @@ namespace DayFive.Tests
         public void TestRunProgramSuccessfuly(int[] inputCode, int[] expectedOutputCode)
         {
             var program = new IntcodeComputer(inputCode);
-            var output = long.MinValue;
-            program.RunProgram(new long[] { 0 }, ref output);
+            program.RunProgram(new long[] { 0 });
 
             CollectionAssert.AreEquivalent(expectedOutputCode, program.Memory.Select(e => (int)e).ToList());
         }
@@ -49,23 +48,21 @@ namespace DayFive.Tests
         public void TestRunProgramOutputSuccessfuly(long[] inputCode, int? input, long expectedOutput)
         {
             var program = new IntcodeComputer(inputCode);
-            var output = long.MinValue;
             var inputs = input == null ? null : new long[] { (int)input };
-            var status = program.RunProgram(inputs, ref output);
+            var status = program.RunProgram(inputs);
 
             Assert.AreEqual(ProgramStatus.Terminated, status);
-            Assert.AreEqual(expectedOutput, output);
+            Assert.AreEqual(expectedOutput, program.Output.Last());
         }
 
         [TestMethod]
         public void TestRunProgramOutputSixteenDigitsNumber()
         {
             var program = new IntcodeComputer(new int[] { 1102, 34915192, 34915192, 7, 4, 7, 99, 0 });
-            var output = long.MinValue;
-            var status = program.RunProgram(null, ref output);
+            var status = program.RunProgram(null);
 
             Assert.AreEqual(ProgramStatus.Terminated, status);
-            Assert.AreEqual(16, output.ToString().Length);
+            Assert.AreEqual(16, program.Output.Last().ToString().Length);
         }
     }
 }
