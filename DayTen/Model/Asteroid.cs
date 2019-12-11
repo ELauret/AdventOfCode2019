@@ -39,6 +39,8 @@ namespace DayTen.Model
 
         public int CountAsteroidsWithDirectLineOfSight(Map map)
         {
+            if (map == null) throw new ArgumentNullException(nameof(map));
+
             var count = 0;
 
             foreach (var asteroid in map.Locations)
@@ -88,7 +90,7 @@ namespace DayTen.Model
             Angle = ChangeAngleToClockwiseFromNorth(complex.Phase);
         }
 
-        private static double ChangeAngleToClockwiseFromNorth(double angle)
+        public static double ChangeAngleToClockwiseFromNorth(double angle)
         {
             angle = angle + Math.PI / 2;
             if (angle < 0.0) angle += 2 * Math.PI;
