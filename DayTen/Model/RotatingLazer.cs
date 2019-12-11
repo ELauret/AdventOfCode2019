@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DayTen.Model
 {
@@ -11,8 +10,7 @@ namespace DayTen.Model
 
         public RotatingLazer(ILocation asteroid)
         {
-            if (asteroid == null) throw new ArgumentNullException(nameof(asteroid));
-            Location = asteroid;
+            Location = asteroid ?? throw new ArgumentNullException(nameof(asteroid));
         }
 
         public ILocation VaporizeAsteroids(Map map, int count)
@@ -46,7 +44,7 @@ namespace DayTen.Model
             foreach (var group in groups)
             {
                 var orderedGroup = group.OrderBy(a => a.Radius).ToArray();
-                for (int i = 0; i < orderedGroup.Count(); i++)
+                for (int i = 0; i < orderedGroup.Length; i++)
                 {
                     orderedGroup[i].Angle += 2 * i * Math.PI;
                 }

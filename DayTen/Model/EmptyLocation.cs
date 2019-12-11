@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DayTen.Model
+﻿namespace DayTen.Model
 {
     public class EmptyLocation : Location
     {

@@ -1,9 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DayTen.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using DayTen.Model;
 
 namespace DayTen.Model.Tests
 {

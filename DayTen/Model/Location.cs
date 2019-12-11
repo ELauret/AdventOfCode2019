@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DayTen.Model
 {
@@ -24,20 +22,14 @@ namespace DayTen.Model
             return map.Locations.Contains(this);
         }
 
-        public int DistanceTo(ILocation location)
-        {
-            if (location == null) throw new ArgumentNullException(nameof(location));
-
-            return Math.Abs(X - location.X) + Math.Abs(Y - location.Y);
-        }
-
         public override bool Equals(object obj)
         {
-            var asteroid = obj as ILocation;
+            if (obj == null) return false;
+            if (!(obj is ILocation)) return false;
 
-            if (asteroid == null) return false;
+            var location = obj as ILocation;
 
-            return (X == asteroid.X) && (Y == asteroid.Y); ;
+            return (GetType() == obj.GetType()) && (X == location.X) && (Y == location.Y); ;
         }
 
         public override string ToString()
