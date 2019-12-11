@@ -23,5 +23,10 @@ namespace DayEleven.Model
 
             return (X == panel.X) && (Y == panel.Y);
         }
+
+        public override string ToString()
+        {
+            return $"Panel: ({X},{Y})";
+        }
     }
 }

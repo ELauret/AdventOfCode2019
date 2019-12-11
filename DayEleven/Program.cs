@@ -21,9 +21,15 @@ namespace DayEleven
 
                 var hull = new Hull();
                 var paintingRobot = new PaintingRobot(inputCode);
-                paintingRobot.PaintHull(hull);
+                paintingRobot.PaintHull(hull, PaintColor.Black);
+                hull.ViewHull();
 
                 Console.WriteLine(hull.Panels.Count);
+
+                hull = new Hull();
+                paintingRobot.Brain.Reset();
+                paintingRobot.PaintHull(hull, PaintColor.White);
+                hull.ViewHull();
             }
             catch (Exception ex)
             {

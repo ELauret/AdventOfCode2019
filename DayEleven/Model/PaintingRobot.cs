@@ -19,9 +19,9 @@ namespace DayEleven.Model
             Brain = new IntcodeComputer(program);
         }
 
-        public void PaintHull(Hull hull)
+        public void PaintHull(Hull hull, PaintColor startingColor)
         {            
-            var status = Brain.RunProgram(new long[] { 0 }); ;
+            var status = Brain.RunProgram(new long[] { (long)startingColor }); ;
 
             while (status == ProgramStatus.WaitingForInput)
             {
