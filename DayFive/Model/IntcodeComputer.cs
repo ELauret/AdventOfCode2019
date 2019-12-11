@@ -103,5 +103,10 @@ namespace DayFive.Model
         {
             return string.Join("\t", Memory);
         }
+
+        public string PrintOutput()
+        {
+            return $"Output: ({string.Join(',', Output.ToArray()).Trim(',')})";
+        }
     }
 }
