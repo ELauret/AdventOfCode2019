@@ -15,11 +15,13 @@ namespace DayFive.Model
 
         public IntcodeComputer(IEnumerable<long> program)
         {
-            Program = program;
+            Program = program ?? throw new ArgumentNullException(nameof(program));
             Reset();
         }
 
-        public IntcodeComputer(IEnumerable<int> program) : this(program.Select(e => (long)e).ToArray()) { }
+        public IntcodeComputer(string program) : this(program?.Split(',').Select(long.Parse)) { }
+
+        public IntcodeComputer(IEnumerable<int> program) : this(program?.Select(e => (long)e).ToArray()) { }
 
         public ProgramStatus RunProgram(IEnumerable<long> input)
         {
@@ -75,7 +77,7 @@ namespace DayFive.Model
             return ProgramStatus.Terminated;
         }
 
-        private int CheckInstruction(long instruction)
+        private static int CheckInstruction(long instruction)
         {
             return CheckMemoryValueIsInt(instruction);
         }
