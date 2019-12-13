@@ -36,6 +36,21 @@ namespace DayTwelve
 
                 watch.Stop();
                 Console.WriteLine(watch.ElapsedMilliseconds);
+
+                globalSystem = new GlobalSystem(lines);
+
+                var frequencyX = globalSystem.FindFrequencyOfOneDirection(0);
+                Console.WriteLine($"Frequency along X: {frequencyX}");
+
+                var frequencyY = globalSystem.FindFrequencyOfOneDirection(1);
+                Console.WriteLine($"Frequency along Y: {frequencyY}");
+
+                var frequencyZ = globalSystem.FindFrequencyOfOneDirection(2);
+                Console.WriteLine($"Frequency along Z: {frequencyZ}");
+
+                var globalFrequency = GlobalSystem.LeastCommonMultiplier(frequencyZ,
+                                    GlobalSystem.LeastCommonMultiplier(frequencyY, frequencyX));
+                Console.WriteLine($"System Frequency: {globalFrequency}");
             }
             catch (Exception ex)
             {

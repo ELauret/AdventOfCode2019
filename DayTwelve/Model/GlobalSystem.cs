@@ -27,7 +27,7 @@ namespace DayTwelve.Model
             for (int i = 0; i < steps; i++)
             {
                 UpdateVelocities();
-                Updateposition();
+                UpdatePosition();
             }
 
             return TotalEnergy();
@@ -35,65 +35,16 @@ namespace DayTwelve.Model
 
         public void UpdateVelocities()
         {
-            for (int i = 0; i < Size; i++)
-            {
-                var xPosition = Positions.Coordinates[1][i];
-                Velocities.Coordinates[1][i] += Positions.Coordinates[1].Count(x => x > xPosition)
-                                                - Positions.Coordinates[1].Count(x => x < xPosition);
-
-                var yPosition = Positions.Coordinates[2][i];
-                Velocities.Coordinates[2][i] += Positions.Coordinates[2].Count(y => y > yPosition)
-                                                - Positions.Coordinates[2].Count(y => y < yPosition);
-
-                var zPosition = Positions.Coordinates[3][i];
-                Velocities.Coordinates[3][i] += Positions.Coordinates[3].Count(z => z > zPosition)
-                                                - Positions.Coordinates[3].Count(z => z < zPosition);
-            }
+            UpdateVelocitiesOfOneDirection(0);
+            UpdateVelocitiesOfOneDirection(1);
+            UpdateVelocitiesOfOneDirection(2);
         }
 
-        //public int FindFrequencyOfOneDirection(int direction)
-        //{
-        //    var listPositions = new List<int[]>();
-        //    var position = new int[Size];
-        //    for (int i = 0; i < Size; i++)
-        //    {
-        //        position[i] = Positions.Coordinates[direction][i];
-        //    }
-
-        //    var frequency = 0;
-        //    var _continue = true;
-
-        //    while (_continue)
-        //    {
-        //        frequency++;
-
-        //        UpdateVelocitiesOfOneDirection(direction);
-        //        UpdatepositionOfOneDirection(direction);
-
-        //        positionX = new int[Size];
-        //        for (int i = 0; i < Size; i++)
-        //        {
-        //            positionX[i] = Positions.X[i];
-        //        }
-
-        //        if (xPositions.Any(p => ArrayAreEquals(p, positionX))) break;
-
-        //        xPositions.Add(positionX);
-        //    }
-
-        //    return frequency;
-        //}
-
-        public bool ArrayAreEquals(int[] array1, int[] array2)
+        public void UpdatePosition()
         {
-            if (array1.Length != array2.Length) return false;
-
-            for (int i = 0; i < array1.Length; i++)
-            {
-                if (array1[i] != array2[i]) return false;
-            }
-
-            return true;
+            UpdatePositionOfOneDirection(0);
+            UpdatePositionOfOneDirection(1);
+            UpdatePositionOfOneDirection(2);
         }
 
         public void UpdateVelocitiesOfOneDirection(int direction)
@@ -107,17 +58,7 @@ namespace DayTwelve.Model
             }
         }
 
-        public void Updateposition()
-        {
-            for (int i = 0; i < Size; i++)
-            {
-                Positions.Coordinates[1][i] += Velocities.Coordinates[1][i];
-                Positions.Coordinates[2][i] += Velocities.Coordinates[2][i];
-                Positions.Coordinates[3][i] += Velocities.Coordinates[3][i];
-            }
-        }
-
-        public void UpdatepositionOfOneDirection(int direction)
+        public void UpdatePositionOfOneDirection(int direction)
         {
             for (int i = 0; i < Size; i++)
             {
@@ -131,15 +72,72 @@ namespace DayTwelve.Model
 
             for (int i = 0; i < Size; i++)
             {
-                totalEnergy += (Math.Abs(Positions.Coordinates[1][i])
-                                + Math.Abs(Positions.Coordinates[2][i])
-                                + Math.Abs(Positions.Coordinates[3][i]))
-                            * (Math.Abs(Velocities.Coordinates[1][i])
-                                + Math.Abs(Velocities.Coordinates[2][i])
-                                + Math.Abs(Velocities.Coordinates[3][i]));
+                totalEnergy += (Math.Abs(Positions.Coordinates[0][i])
+                                + Math.Abs(Positions.Coordinates[1][i])
+                                + Math.Abs(Positions.Coordinates[2][i]))
+                            * (Math.Abs(Velocities.Coordinates[0][i])
+                                + Math.Abs(Velocities.Coordinates[1][i])
+                                + Math.Abs(Velocities.Coordinates[2][i]));
             }
 
             return totalEnergy;
+        }
+
+        public long FindFrequencyOfOneDirection(int direction)
+        {
+            var systemStates = new Dictionary<ulong, long>();
+
+            long step = 0;
+
+            while (true)
+            {
+                var state = GetSystemState(direction);
+
+                if (systemStates.ContainsKey(state))
+                {
+                    return step - systemStates[state];
+                }
+
+                systemStates.Add(state, step);
+
+                UpdateVelocitiesOfOneDirection(direction);
+                UpdatePositionOfOneDirection(direction);
+
+                step++;
+            }
+        }
+
+        public ulong GetSystemState(int direction)
+        {
+            var myHash = Velocities.GetHash(direction) | (Positions.GetHash(direction) << Velocities.Size * 8);
+
+            var otherHash = ((ulong)(Positions.Coordinates[direction][0] & 0xff)) |
+                    ((ulong)(Velocities.Coordinates[direction][0] & 0xff) << 8) |
+                    ((ulong)(Positions.Coordinates[direction][1] & 0xff) << 16) |
+                    ((ulong)(Velocities.Coordinates[direction][1] & 0xff) << 24) |
+                    ((ulong)(Positions.Coordinates[direction][2] & 0xff) << 32) |
+                    ((ulong)(Velocities.Coordinates[direction][2] & 0xff) << 40) |
+                    ((ulong)(Positions.Coordinates[direction][3] & 0xff) << 48) |
+                    ((ulong)(Velocities.Coordinates[direction][3] & 0xff) << 56);
+
+            return otherHash;
+        }
+
+        public static long GreatestCommonDivisor(long a, long b)
+        {
+            while (a != b)
+            {
+                if (a % b == 0) return b;
+                if (b % a == 0) return a;
+                if (a > b) a -= b;
+                if (b > a) b -= a;
+            }
+            return a;
+        }
+
+        public static long LeastCommonMultiplier(long a, long b)
+        {
+            return a * b / GreatestCommonDivisor(a, b);
         }
     }
 }

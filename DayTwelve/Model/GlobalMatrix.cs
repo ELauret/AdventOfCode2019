@@ -8,7 +8,7 @@ namespace DayTwelve.Model
 {
     public class GlobalMatrix
     {
-        const int DIMENSION = 3;
+        public const int DIMENSION = 3;
 
         public int[][] Coordinates { get; set; }
         public int Size { get; set; }
@@ -35,10 +35,22 @@ namespace DayTwelve.Model
                 if(!match.Groups.ContainsKey("X") || !match.Groups.ContainsKey("Y") || !match.Groups.ContainsKey("Z"))
                     throw new ArgumentException($"{input} and {pattern} does not provide the required data.");
 
-                Coordinates[1][i] = int.Parse(match.Groups["X"].Value);
-                Coordinates[2][i] = int.Parse(match.Groups["Y"].Value);
-                Coordinates[3][i] = int.Parse(match.Groups["Z"].Value);
+                Coordinates[0][i] = int.Parse(match.Groups["X"].Value);
+                Coordinates[1][i] = int.Parse(match.Groups["Y"].Value);
+                Coordinates[2][i] = int.Parse(match.Groups["Z"].Value);
             }
+        }
+
+        public ulong GetHash(int direction)
+        {
+            ulong hash = 0;
+
+            for (int i = 0; i < Size; i++)
+            {
+                hash |= (ulong)((Coordinates[direction][i] & 0xff) << i * 8);
+            }
+
+            return hash;
         }
     }
 }
