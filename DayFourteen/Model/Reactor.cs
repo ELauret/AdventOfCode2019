@@ -7,7 +7,7 @@ namespace DayFourteen.Model
     public class Reactor
     {
         public List<Reaction> Reactions { get; }
-        public Dictionary<string, Quantities> Reactants { get; }
+        public Dictionary<string, Quantities> Reactants { get; private set; }
 
         public Reactor(IEnumerable<string> reactions)
         {
@@ -20,6 +20,11 @@ namespace DayFourteen.Model
                 }
             }
 
+            ResetReactants();
+        }
+
+        private void ResetReactants()
+        {
             Reactants = new Dictionary<string, Quantities>();
             var reactants = Reactions.SelectMany(r => r.Reactants).Select(c => c.Type).Distinct();
             foreach (var reactant in reactants)
@@ -28,7 +33,7 @@ namespace DayFourteen.Model
             }
         }
 
-        public int RequiredToProduce(string baseReactant, string chemicalToProduce, int quantity)
+        public long RequiredToProduce(string baseReactant, string chemicalToProduce, long quantity)
         {
             if (quantity == 0) return 0;
 
@@ -36,18 +41,19 @@ namespace DayFourteen.Model
 
             if (reaction == null) return 0;
 
+            var ratio = (long)Math.Ceiling((double)quantity / reaction.Product.Quantity);
+
             if (Reactants.ContainsKey(reaction.Product.Type))
             {
                 var product = Reactants[reaction.Product.Type];
-                product.Remaining += (int)Math.Ceiling((double)quantity / reaction.Product.Quantity)
-                    * reaction.Product.Quantity - quantity;
+                product.Remaining += ratio * reaction.Product.Quantity - quantity;
                 Reactants[reaction.Product.Type] = product;
             }
 
             foreach (var reactant in reaction.Reactants)
             {
                 var ingredient = Reactants[reactant.Type];
-                var reactantQuantity = (int)Math.Ceiling((double)quantity / reaction.Product.Quantity) * reactant.Quantity;
+                long reactantQuantity = ratio * reactant.Quantity;
                 if (ingredient.Remaining > 0)
                 {
                     if (reactantQuantity < ingredient.Remaining)
@@ -68,6 +74,26 @@ namespace DayFourteen.Model
             }
 
             return Reactants[baseReactant].Consumed;
+        }
+
+        public long MaxFuelProducedWith(long oreQuantity)
+        {
+            long minFuel = 0;
+            long maxFuel = oreQuantity;
+            long producedFuel = 0;
+
+            while (maxFuel - minFuel > 1)
+            {
+                producedFuel = (maxFuel + minFuel) / 2;
+
+                ResetReactants();
+                var neededOre = RequiredToProduce("ORE", "FUEL", producedFuel);
+
+                if (neededOre < oreQuantity) minFuel = producedFuel;
+                else maxFuel = producedFuel;
+            }
+
+            return producedFuel;
         }
     }
 }

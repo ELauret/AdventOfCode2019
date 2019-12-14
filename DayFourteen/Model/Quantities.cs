@@ -4,8 +4,8 @@ namespace DayFourteen.Model
 {
     public struct Quantities : IEquatable<Quantities>
     {
-        public int Consumed { get; set; }
-        public int Remaining { get; set; }
+        public long Consumed { get; set; }
+        public long Remaining { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -40,6 +40,11 @@ namespace DayFourteen.Model
         public static bool operator !=(Quantities left, Quantities right)
         {
             return !(left == right);
+        }
+
+        public override string ToString()
+        {
+            return $"Consumed: {Consumed}; Reamining: {Remaining}";
         }
     }
 }

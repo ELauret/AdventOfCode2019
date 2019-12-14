@@ -17,8 +17,16 @@ namespace DayFourteen
             {
                 var reactions = FileReader.ReadAllLines(path).Where(r => Regex.IsMatch(r, Reaction.REACTION_PATTERN));
 
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+
                 var reactor = new Reactor(reactions);
                 Console.WriteLine(reactor.RequiredToProduce("ORE", "FUEL", 1));
+
+                watch.Stop();
+                Console.WriteLine(watch.ElapsedMilliseconds);
+
+                reactor = new Reactor(reactions);
+                Console.WriteLine(reactor.MaxFuelProducedWith(1000000000000));
             }
             catch (IOException ex)
             {

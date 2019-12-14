@@ -18,5 +18,16 @@ namespace DayFourteen.Model.Tests
 
             Assert.AreEqual(expectedCount, reactor.RequiredToProduce("ORE", "FUEL", 1));
         }
+
+        [DataTestMethod()]
+        [DataRow("TestData13312", 82892753)]
+        [DataRow("TestData180697", 5586022)]
+        [DataRow("TestData2210736", 460664)]
+        public void MaxFuelProducedWithTest(string file, int expectedCount)
+        {
+            var reactor = new Reactor(FileReader.ReadAllLines($"Resources/{file}.txt"));
+
+            Assert.AreEqual(expectedCount, reactor.MaxFuelProducedWith(1000000000000));
+        }
     }
 }
