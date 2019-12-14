@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Linq;
 
 namespace DayTwelve.Model
@@ -111,8 +109,10 @@ namespace DayTwelve.Model
         {
             var myHash = Velocities.GetHash(direction) | (Positions.GetHash(direction) << Velocities.Size * 8);
 
+#pragma warning disable CS0675 // Bitwise-or operator used on a sign-extended operand; consider casting to a smaller unsigned type first
             var otherHash = ((ulong)(Positions.Coordinates[direction][0] & 0xff)) |
                     ((ulong)(Velocities.Coordinates[direction][0] & 0xff) << 8) |
+#pragma warning restore CS0675 // Bitwise-or operator used on a sign-extended operand; consider casting to a smaller unsigned type first
                     ((ulong)(Positions.Coordinates[direction][1] & 0xff) << 16) |
                     ((ulong)(Velocities.Coordinates[direction][1] & 0xff) << 24) |
                     ((ulong)(Positions.Coordinates[direction][2] & 0xff) << 32) |

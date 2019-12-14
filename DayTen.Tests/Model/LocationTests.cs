@@ -1,8 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DayTen.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DayTen.Model.Tests
 {
@@ -74,7 +70,7 @@ namespace DayTen.Model.Tests
         public void EmptyLocationsWithDifferentCoordinatesEqualsTestFalse()
         {
             var firstLocation = new EmptyLocation(12, 35);
-            var secondLocation = new EmptyLocation(76,29);
+            var secondLocation = new EmptyLocation(76, 29);
 
             Assert.IsFalse(firstLocation.Equals(secondLocation));
         }

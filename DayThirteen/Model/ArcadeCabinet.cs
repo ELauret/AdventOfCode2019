@@ -1,16 +1,14 @@
 ﻿using DayFive.Model;
+using MoreLinq;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using MoreLinq;
-using System.Threading;
 
 namespace DayThirteen.Model
 {
     public class ArcadeCabinet
     {
-        public IntcodeComputer Brain{ get; set; }
+        public IntcodeComputer Brain { get; set; }
         public List<Tile> Screen { get; set; }
         public int Score { get; set; }
 
@@ -64,7 +62,7 @@ namespace DayThirteen.Model
 
                 Console.WriteLine();
             }
-            
+
             Console.WriteLine($"Score: {Score}");
         }
 

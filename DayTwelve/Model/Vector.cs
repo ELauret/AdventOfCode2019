@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DayTwelve.Model
 {
+#pragma warning disable CS0659 // 'Vector' overrides Object.Equals(object o) but does not override Object.GetHashCode()
     public class Vector
+#pragma warning restore CS0659 // 'Vector' overrides Object.Equals(object o) but does not override Object.GetHashCode()
     {
         public int X { get; set; }
         public int Y { get; set; }

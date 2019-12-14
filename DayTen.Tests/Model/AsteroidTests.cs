@@ -1,5 +1,4 @@
-﻿using DayTen.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace DayTen.Model.Tests

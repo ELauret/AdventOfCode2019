@@ -1,8 +1,6 @@
-﻿using System;
+﻿using DayFive.Model;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DayFive.Model;
 
 namespace DayEleven.Model
 {
@@ -20,7 +18,7 @@ namespace DayEleven.Model
         }
 
         public void PaintHull(Hull hull, PaintColor startingColor)
-        {            
+        {
             var status = Brain.RunProgram(new long[] { (long)startingColor }); ;
 
             while (status == ProgramStatus.WaitingForInput)
@@ -32,7 +30,7 @@ namespace DayEleven.Model
                 Move(direction);
 
                 color = hull.GetPanel(X, Y)?.Color ?? PaintColor.Black;
-                status = Brain.RunProgram(new long[] { (long)color});
+                status = Brain.RunProgram(new long[] { (long)color });
             }
         }
 
@@ -47,7 +45,7 @@ namespace DayEleven.Model
             switch (Orientation)
             {
                 case RobotOrientation.North:
-                    if(direction == RobotDirection.TurnLeft)
+                    if (direction == RobotDirection.TurnLeft)
                     {
                         X--;
                         Orientation = RobotOrientation.West;

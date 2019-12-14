@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Linq;
 
 namespace DayTwelve.Model
 {
@@ -28,11 +25,11 @@ namespace DayTwelve.Model
 
             for (int i = 0; i < size; i++)
             {
-                if(!Regex.IsMatch(input[i], pattern)) throw new ArgumentException($"{input} does not match the expected pattern.");
+                if (!Regex.IsMatch(input[i], pattern)) throw new ArgumentException($"{input} does not match the expected pattern.");
 
                 var match = Regex.Match(input[i], pattern);
 
-                if(!match.Groups.ContainsKey("X") || !match.Groups.ContainsKey("Y") || !match.Groups.ContainsKey("Z"))
+                if (!match.Groups.ContainsKey("X") || !match.Groups.ContainsKey("Y") || !match.Groups.ContainsKey("Z"))
                     throw new ArgumentException($"{input} and {pattern} does not provide the required data.");
 
                 Coordinates[0][i] = int.Parse(match.Groups["X"].Value);
@@ -47,7 +44,9 @@ namespace DayTwelve.Model
 
             for (int i = 0; i < Size; i++)
             {
+#pragma warning disable CS0675 // Bitwise-or operator used on a sign-extended operand; consider casting to a smaller unsigned type first
                 hash |= (ulong)((Coordinates[direction][i] & 0xff) << i * 8);
+#pragma warning restore CS0675 // Bitwise-or operator used on a sign-extended operand; consider casting to a smaller unsigned type first
             }
 
             return hash;

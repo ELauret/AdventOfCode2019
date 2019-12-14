@@ -1,8 +1,8 @@
-﻿using System;
-
-namespace DayTen.Model
+﻿namespace DayTen.Model
 {
+#pragma warning disable CS0659 // 'Location' overrides Object.Equals(object o) but does not override Object.GetHashCode()
     public abstract class Location : ILocation
+#pragma warning restore CS0659 // 'Location' overrides Object.Equals(object o) but does not override Object.GetHashCode()
     {
         public int X { get; set; }
         public int Y { get; set; }

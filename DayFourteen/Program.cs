@@ -1,7 +1,9 @@
-﻿//using DayFourteen.Model;
+﻿using DayFourteen.Model;
+using FourLeggedHead.IO;
 using System;
 using System.IO;
-using FourLeggedHead.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace DayFourteen
 {
@@ -13,7 +15,10 @@ namespace DayFourteen
 
             try
             {
-                var lines = FileReader.ReadAllLines(path);
+                var reactions = FileReader.ReadAllLines(path).Where(r => Regex.IsMatch(r, Reaction.REACTION_PATTERN));
+
+                var reactor = new Reactor(reactions);
+                Console.WriteLine(reactor.RequiredToProduce("ORE", "FUEL", 1));
             }
             catch (IOException ex)
             {

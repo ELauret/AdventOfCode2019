@@ -1,8 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DayTwelve.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DayTwelve.Model.Tests
 {

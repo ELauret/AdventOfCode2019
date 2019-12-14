@@ -34,7 +34,9 @@ namespace DayThree.Model
         {
             if (!Regex.IsMatch(direction, @"[URDL]")) throw new ArgumentException($"{nameof(direction)} is invalid.");
 
+#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
             return direction switch
+#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
             {
                 "U" => Direction.Up,
                 "R" => Direction.Right,

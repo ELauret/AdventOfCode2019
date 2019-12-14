@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DayThirteen.Model
+﻿namespace DayThirteen.Model
 {
     public enum TileType
     {

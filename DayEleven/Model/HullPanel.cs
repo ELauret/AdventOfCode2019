@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DayEleven.Model
 {
+#pragma warning disable CS0659 // 'HullPanel' overrides Object.Equals(object o) but does not override Object.GetHashCode()
     public class HullPanel
+#pragma warning restore CS0659 // 'HullPanel' overrides Object.Equals(object o) but does not override Object.GetHashCode()
     {
         public int X { get; set; }
         public int Y { get; set; }

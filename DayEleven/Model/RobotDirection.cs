@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DayEleven.Model
+﻿namespace DayEleven.Model
 {
     public enum RobotDirection
     {

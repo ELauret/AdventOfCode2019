@@ -1,7 +1,7 @@
-﻿using System;
+﻿using DayThirteen.Model;
+using System;
 using System.IO;
 using System.Linq;
-using DayThirteen.Model;
 
 namespace DayThirteen
 {
