@@ -23,6 +23,10 @@ namespace FourLeggedHead.Model
 
         public IntcodeComputer(IEnumerable<int> program) : this(program?.Select(e => (long)e).ToArray()) { }
 
+        public ProgramStatus RunProgram(int input) { return RunProgram((long)input); }
+
+        public ProgramStatus RunProgram(long input) { return RunProgram(new long[] { input }); }
+
         public ProgramStatus RunProgram(IEnumerable<long> input)
         {
             var instructionCode = new InstructionCode(CheckInstruction(Memory[InstructionPointer]));
