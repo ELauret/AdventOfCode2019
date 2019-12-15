@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DayFive.Model
+namespace FourLeggedHead.Model
 {
     public partial class IntcodeComputer
     {

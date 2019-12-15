@@ -1,4 +1,4 @@
-﻿using DayTwo.Model;
+﻿using FourLeggedHead.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,14 +29,14 @@ namespace DayTwo
             }
         }
 
-        private static int CalculateStatePartI(IEnumerable<int> inputCode)
+        private static long CalculateStatePartI(IEnumerable<int> inputCode)
         {
             var computer = new IntcodeComputer(inputCode);
 
             computer.FixInputMemory(1, 12);
             computer.FixInputMemory(2, 2);
 
-            computer.RunProgram();
+            computer.RunProgram(null);
 
             return computer.Memory[0];
         }
@@ -52,7 +52,7 @@ namespace DayTwo
                     computer.FixInputMemory(1, i);
                     computer.FixInputMemory(2, j);
 
-                    computer.RunProgram();
+                    computer.RunProgram(null);
 
                     if (computer.Memory[0] == 19690720)
                     {

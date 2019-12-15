@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DayFive\DayFive.csproj" />
+    <ProjectReference Include="..\FourLeggedHead.Model\FourLeggedHead.Model.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DayFive.Model
+namespace FourLeggedHead.Model
 {
     public partial class IntcodeComputer
     {

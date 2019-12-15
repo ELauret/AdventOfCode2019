@@ -1,4 +1,4 @@
-﻿namespace DayFive.Model
+﻿namespace FourLeggedHead.Model
 {
     public enum ParameterMode
     {

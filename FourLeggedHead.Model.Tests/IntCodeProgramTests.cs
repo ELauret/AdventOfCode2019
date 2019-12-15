@@ -1,8 +1,8 @@
-using DayFive.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
-namespace DayFive.Tests
+namespace FourLeggedHead.Model.Tests
 {
     [TestClass]
     public class IntCodeProgramTests
@@ -16,6 +16,9 @@ namespace DayFive.Tests
         {
             var program = new IntcodeComputer(inputCode);
             program.RunProgram(new long[] { 0 });
+
+            Console.WriteLine("[{0}]", string.Join(", ", expectedOutputCode));
+            Console.WriteLine("[{0}]", string.Join(", ", program.Memory));
 
             CollectionAssert.AreEquivalent(expectedOutputCode, program.Memory.Select(e => (int)e).ToList());
         }

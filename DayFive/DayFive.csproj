@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FourLeggedHead.Model\FourLeggedHead.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Resources\input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
