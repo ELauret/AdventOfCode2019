@@ -7,10 +7,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FourLeggedHead.IO\FourLeggedHead.IO.csproj" />
-    <ProjectReference Include="..\FourLeggedHead.Model\FourLeggedHead.Model.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MathNet.Numerics" Version="4.9.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,6 +19,9 @@
 
   <ItemGroup>
     <None Update="Resources\input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\InputTest.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
