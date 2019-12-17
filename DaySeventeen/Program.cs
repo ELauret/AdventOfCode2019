@@ -18,6 +18,8 @@ namespace DaySeventeen
             {
                 var lines = FileReader.ReadAllLines(path);
 
+                // Part I
+
                 var ascii = new IntcodeComputer(lines.ElementAt(0));
                 ascii.RunProgram(null);
 
@@ -66,6 +68,32 @@ namespace DaySeventeen
 
                 Console.WriteLine(map.Count(l => l.Type == LocationType.Intersection));
                 Console.WriteLine(sumOfAlignmentParameters);
+
+                // Part II
+
+                var robot = new IntcodeComputer(lines.ElementAt(0));
+                robot.FixInputMemory(0, 2);
+
+                var movements = FileReader.ReadAllLines(@"Resources/MovementsAlpha.txt");
+                var inputs = new List<long>();
+                var debug = 'n';
+
+                foreach (var line in movements)
+                {
+                    inputs.AddRange(line.ToCharArray().Select(c => (long)c).Append(10));
+                }
+
+                robot.RunProgram(inputs.Append(debug).Append(10));
+
+                if (debug == 'y')
+                {
+                    foreach (var output in robot.Output)
+                    {
+                        Console.Write((char)output);
+                    } 
+                }
+
+                Console.WriteLine(robot.Output.Last());
             }
             catch (IOException ex)
             {
