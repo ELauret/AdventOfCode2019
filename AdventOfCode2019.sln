@@ -63,35 +63,39 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayEleven", "DayEleven\DayE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "12 - DayTwelve", "12 - DayTwelve", "{73534CBA-7726-4B62-B29E-0E588E3BA09A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayTwelve", "DayTwelve\DayTwelve.csproj", "{C3C48AEB-5C31-4ABF-B0A4-5664509BE68B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayTwelve", "DayTwelve\DayTwelve.csproj", "{C3C48AEB-5C31-4ABF-B0A4-5664509BE68B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayTwelve.Tests", "DayTwelve.Tests\DayTwelve.Tests.csproj", "{174F7654-5EDC-4E87-A102-DFAF9DF111E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayTwelve.Tests", "DayTwelve.Tests\DayTwelve.Tests.csproj", "{174F7654-5EDC-4E87-A102-DFAF9DF111E4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "13 - DayThirteen", "13 - DayThirteen", "{CD0E042F-AAC9-4B43-8737-06AD77633723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayThirteen", "DayThirteen\DayThirteen.csproj", "{9F169371-76B6-4500-8152-1F615FD3906C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayThirteen", "DayThirteen\DayThirteen.csproj", "{9F169371-76B6-4500-8152-1F615FD3906C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "14 - DayFourteen", "14 - DayFourteen", "{5CAECCE2-C262-4C70-A0A0-D58B2177C640}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayFourteen", "DayFourteen\DayFourteen.csproj", "{870A95FD-FF98-4D2B-83AA-8EB6208A95BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayFourteen", "DayFourteen\DayFourteen.csproj", "{870A95FD-FF98-4D2B-83AA-8EB6208A95BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayFourteen.Tests", "DayFourteen.Tests\DayFourteen.Tests.csproj", "{AE2DA9DB-1CCF-4562-96A8-B34EC504C57A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayFourteen.Tests", "DayFourteen.Tests\DayFourteen.Tests.csproj", "{AE2DA9DB-1CCF-4562-96A8-B34EC504C57A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{1C54B4FE-5536-4F41-813C-108D92CD8719}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FourLeggedHead.IO", "FourLeggedHead.IO\FourLeggedHead.IO.csproj", "{C620B7D8-CC1C-4649-9879-553821E015E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourLeggedHead.IO", "FourLeggedHead.IO\FourLeggedHead.IO.csproj", "{C620B7D8-CC1C-4649-9879-553821E015E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FourLeggedHead.Model", "FourLeggedHead.Model\FourLeggedHead.Model.csproj", "{394CD7EA-090E-43EF-8BC9-15CCEF353E27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourLeggedHead.Model", "FourLeggedHead.Model\FourLeggedHead.Model.csproj", "{394CD7EA-090E-43EF-8BC9-15CCEF353E27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FourLeggedHead.Model.Tests", "FourLeggedHead.Model.Tests\FourLeggedHead.Model.Tests.csproj", "{7FB4B55B-6BC7-403A-A566-A400CC907F89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourLeggedHead.Model.Tests", "FourLeggedHead.Model.Tests\FourLeggedHead.Model.Tests.csproj", "{7FB4B55B-6BC7-403A-A566-A400CC907F89}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "15 - DayFifteen", "15 - DayFifteen", "{C9586334-34C9-49D5-9E2A-946E6B376564}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayFifteen", "DayFifteen\DayFifteen.csproj", "{443762B3-C9CB-40D9-9EF6-903B84C01312}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayFifteen", "DayFifteen\DayFifteen.csproj", "{443762B3-C9CB-40D9-9EF6-903B84C01312}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "16 - DaySixteen", "16 - DaySixteen", "{E474424A-332F-470B-9B76-26CA38DF1E65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaySixteen", "DaySixteen\DaySixteen.csproj", "{36471689-8D2A-4D94-B7B8-A026B0AF6881}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaySixteen", "DaySixteen\DaySixteen.csproj", "{36471689-8D2A-4D94-B7B8-A026B0AF6881}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "17 - DaySeventeen", "17 - DaySeventeen", "{ADD04F3D-4F97-480E-B27C-81F504DAF1DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaySeventeen", "DaySeventeen\DaySeventeen.csproj", "{EBBFD49A-133D-4457-B2C1-108447B07A74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -211,6 +215,10 @@ Global
 		{36471689-8D2A-4D94-B7B8-A026B0AF6881}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36471689-8D2A-4D94-B7B8-A026B0AF6881}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36471689-8D2A-4D94-B7B8-A026B0AF6881}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBBFD49A-133D-4457-B2C1-108447B07A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBBFD49A-133D-4457-B2C1-108447B07A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBBFD49A-133D-4457-B2C1-108447B07A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBBFD49A-133D-4457-B2C1-108447B07A74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -244,6 +252,7 @@ Global
 		{7FB4B55B-6BC7-403A-A566-A400CC907F89} = {1C54B4FE-5536-4F41-813C-108D92CD8719}
 		{443762B3-C9CB-40D9-9EF6-903B84C01312} = {C9586334-34C9-49D5-9E2A-946E6B376564}
 		{36471689-8D2A-4D94-B7B8-A026B0AF6881} = {E474424A-332F-470B-9B76-26CA38DF1E65}
+		{EBBFD49A-133D-4457-B2C1-108447B07A74} = {ADD04F3D-4F97-480E-B27C-81F504DAF1DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8501C55B-7F4D-4991-9D43-1D28EF647A51}
