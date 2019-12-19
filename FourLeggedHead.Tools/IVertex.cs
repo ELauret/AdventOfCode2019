@@ -7,7 +7,5 @@ namespace FourLeggedHead.Tools
     public interface IVertex
     {
         IVertex Parent { get; set; }
-
-        T DistanceTo<T>(IVertex vertex);
     }
 }

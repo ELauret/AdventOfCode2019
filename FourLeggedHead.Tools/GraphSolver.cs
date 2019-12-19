@@ -17,7 +17,7 @@ namespace FourLeggedHead.Tools
         /// <param name="origin"> Starting vertex in the graph for the search </param>
         /// <param name="target"> Vertex to look for </param>
         /// <returns></returns>
-        public static HashSet<IVertex> BreadthFirstSearch(IGraph graph, IVertex origin, IVertex target)
+        public static HashSet<IVertex> BreadthFirstSearch<T>(IGraph<T> graph, IVertex origin, IVertex target) where T : struct
         {
             if (!graph.Contains(origin)) return null;
             if (target != null && !graph.Contains(target)) return null;
@@ -56,7 +56,7 @@ namespace FourLeggedHead.Tools
         /// <param name="graph"> Graph to explore </param>
         /// <param name="origin"> Starting vertex in the graph for its exploration </param>
         /// <returns></returns>
-        public static HashSet<IVertex> BreadthFirstExploration(IGraph graph, IVertex origin)
+        public static HashSet<IVertex> BreadthFirstExploration<T>(IGraph<T> graph, IVertex origin) where T : struct
         {
             return BreadthFirstSearch(graph, origin, null);
         }
@@ -71,14 +71,14 @@ namespace FourLeggedHead.Tools
         /// <param name="graph"> Graph to explore </param>
         /// <param name="origin"> Starting vertex in the graph for its exploration </param>
         /// <returns></returns>
-        public static HashSet<IVertex> DepthFirstSearchRecursive(IGraph graph, IVertex origin)
+        public static HashSet<IVertex> DepthFirstSearchRecursive<T>(IGraph<T> graph, IVertex origin) where T : struct
         {
             var visited = new HashSet<IVertex>();
-            DepthFirstTraverse(graph, visited, origin);
+            DepthFirstTraverse<T>(graph, visited, origin);
             return visited;
         }
 
-        private static void DepthFirstTraverse(IGraph graph, HashSet<IVertex> visited, IVertex vertex)
+        private static void DepthFirstTraverse<T>(IGraph<T> graph, HashSet<IVertex> visited, IVertex vertex) where T : struct
         {
             if (!graph.Contains(vertex)) return;
 
@@ -100,7 +100,7 @@ namespace FourLeggedHead.Tools
         /// <param name="origin"> Starting vertex in the graph for the search </param>
         /// <param name="target"> Vertex to look for </param>
         /// <returns></returns>
-        private static HashSet<IVertex> DepthFirstSearchIterative(IGraph graph, IVertex origin, IVertex target)
+        private static HashSet<IVertex> DepthFirstSearchIterative<T>(IGraph<T> graph, IVertex origin, IVertex target) where T : struct
         {
             if (!graph.Contains(origin)) return null;
             if (target != null && !graph.Contains(target)) return null;
@@ -139,7 +139,7 @@ namespace FourLeggedHead.Tools
         /// <param name="graph"> Graph to explore </param>
         /// <param name="origin"> Starting vertex in the graph for its exploration </param>
         /// <returns></returns>
-        public static HashSet<IVertex> DepthFirstExploration(IGraph graph, IVertex origin)
+        public static HashSet<IVertex> DepthFirstExploration<T>(IGraph<T> graph, IVertex origin) where T : struct
         {
             return DepthFirstSearchIterative(graph, origin, null);
         }
@@ -156,7 +156,7 @@ namespace FourLeggedHead.Tools
         /// <param name="origin"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static Dictionary<IVertex,T> GetShortestPathDijkstra<T>(IGraph graph, IVertex origin, IVertex target)
+        public static Dictionary<IVertex,T> GetShortestPathDijkstra<T>(IGraph<T> graph, IVertex origin, IVertex target)
             where T : struct, IEquatable<T>, IComparable<T>
         {
             if (!graph.Contains(origin)) return null;
@@ -168,10 +168,10 @@ namespace FourLeggedHead.Tools
             foreach (var vertex in queue)
             {
                 vertex.Parent = null;
-                vertices.Add(vertex, graph.MaxDistance<T>());
+                vertices.Add(vertex, graph.MaxDistance());
             }
 
-            vertices[origin] = origin.DistanceTo<T>(origin);
+            vertices[origin] = graph.DistanceBetweenVertices(origin, origin);
 
             while (queue.Any())
             {
@@ -181,7 +181,8 @@ namespace FourLeggedHead.Tools
 
                 foreach (var neighbor in graph.GetNeighbors(vertex))
                 {
-                    var distance = graph.AddDistance<T>(vertices[vertex], neighbor.DistanceTo<T>(vertex));
+                    var distance = graph.AddDistance(vertices[vertex],
+                        (T)graph.DistanceBetweenNeighbors(vertex, neighbor));
 
                     if (distance.CompareTo(vertices[neighbor]) < 0)
                     {
