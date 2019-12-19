@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FourLeggedHead.IO\FourLeggedHead.IO.csproj" />
+    <ProjectReference Include="..\FourLeggedHead.Tools\FourLeggedHead.Tools.csproj" />
   </ItemGroup>
 
   <ItemGroup>

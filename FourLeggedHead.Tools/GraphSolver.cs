@@ -37,12 +37,16 @@ namespace FourLeggedHead.Tools
 
                 if (target != null && vertex == target) return visited;
 
-                foreach (var neighbor in graph.GetNeighbors(vertex))
+                var neighbors = graph.GetNeighbors(vertex);
+                if (neighbors != null)
                 {
-                    if (!visited.Contains(neighbor))
+                    foreach (var neighbor in neighbors)
                     {
-                        queue.Enqueue(neighbor);
-                        neighbor.Parent = vertex;
+                        if (!visited.Contains(neighbor))
+                        {
+                            queue.Enqueue(neighbor);
+                            neighbor.Parent = vertex;
+                        }
                     }
                 }
             }
@@ -84,11 +88,15 @@ namespace FourLeggedHead.Tools
 
             visited.Add(vertex);
 
-            foreach (var neighbor in graph.GetNeighbors(vertex))
+            var neighbors = graph.GetNeighbors(vertex);
+            if (neighbors != null)
             {
-                if (!visited.Contains(neighbor))
+                foreach (var neighbor in neighbors)
                 {
-                    DepthFirstTraverse(graph, visited, neighbor);
+                    if (!visited.Contains(neighbor))
+                    {
+                        DepthFirstTraverse(graph, visited, neighbor);
+                    }
                 }
             }
         }
@@ -120,12 +128,16 @@ namespace FourLeggedHead.Tools
 
                 if (target != null && vertex == target) return visited;
 
-                foreach (var neighbor in graph.GetNeighbors(vertex))
+                var neighbors = graph.GetNeighbors(vertex);
+                if (neighbors != null)
                 {
-                    if (!visited.Contains(neighbor))
+                    foreach (var neighbor in neighbors)
                     {
-                        stack.Push(neighbor);
-                        neighbor.Parent = vertex;
+                        if (!visited.Contains(neighbor))
+                        {
+                            stack.Push(neighbor);
+                            neighbor.Parent = vertex;
+                        }
                     }
                 }
             }
@@ -157,15 +169,15 @@ namespace FourLeggedHead.Tools
         /// <param name="target"></param>
         /// <returns></returns>
         public static Dictionary<IVertex,T> GetShortestPathDijkstra<T>(IGraph<T> graph, IVertex origin, IVertex target)
-            where T : struct, IEquatable<T>, IComparable<T>
+            where T : struct, IEquatable<T>, IComparable<T>, IComparable
         {
             if (!graph.Contains(origin)) return null;
             if (target != null && !graph.Contains(target)) return null;
 
-            var queue = new Queue<IVertex>(graph);
+            var list = new List<IVertex>(graph);
 
             var vertices = new Dictionary<IVertex, T>();
-            foreach (var vertex in queue)
+            foreach (var vertex in list)
             {
                 vertex.Parent = null;
                 vertices.Add(vertex, graph.MaxDistance());
@@ -173,22 +185,33 @@ namespace FourLeggedHead.Tools
 
             vertices[origin] = graph.DistanceBetweenVertices(origin, origin);
 
-            while (queue.Any())
+            while (list.Any())
             {
-                var vertex = queue.Dequeue();
+                var remainingVertices = vertices.Where(v => list.Contains(v.Key)).ToDictionary(v => v.Key, v => v.Value);
+                var minDistance = remainingVertices.Values.Min();
+                var vertex = remainingVertices.First(v => v.Value.Equals(minDistance)).Key;
+                
+                list.Remove(vertex);
 
                 if (target != null && vertex == target) return vertices;
 
-                foreach (var neighbor in graph.GetNeighbors(vertex))
+                var neighbors = graph.GetNeighbors(vertex);
+                if (neighbors != null)
                 {
-                    var distance = graph.AddDistance(vertices[vertex],
-                        (T)graph.DistanceBetweenNeighbors(vertex, neighbor));
-
-                    if (distance.CompareTo(vertices[neighbor]) < 0)
+                    foreach (var neighbor in neighbors)
                     {
-                        neighbor.Parent = vertex;
-                        vertices[neighbor] = distance;
-                    }
+                        if (list.Contains(neighbor))
+                        {
+                            var distance = graph.AddDistance(vertices[vertex],
+                                                (T)graph.DistanceBetweenNeighbors(vertex, neighbor));
+
+                            if (distance.CompareTo(vertices[neighbor]) < 0)
+                            {
+                                neighbor.Parent = vertex;
+                                vertices[neighbor] = distance;
+                            } 
+                        }
+                    } 
                 }
             }
 
